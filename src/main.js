@@ -4,6 +4,12 @@ let config = {
     height: 900,
     autoCenter: true,
     scene: [ Title ],
+    physics: {
+        default: "arcade",
+        arcade: {
+            debug: false
+        }
+    },
     fps: {
         target: 60,
         forceSetTimeOut: true
