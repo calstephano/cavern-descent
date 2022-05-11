@@ -9,26 +9,45 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.movementLock = false;
 
+        
+        // Create hitbox for sword
+        this.hitbox = scene.add.rectangle(0, 0, 20, 20).setStrokeStyle(1, 0xFFFF00);
+
         // Bind keys
         let keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Attack event handling
 
         keySHIFT.on('down', (key, event) => {
             console.log('Shift pressed!');
-            // Use movementLock when there is an animation
+            // Use movementLock when there is an animation or more conditions to stop the dash
             //this.movementLock = true;
             if(this.getAxisH() || this.getAxisV()){
                 this.setVelocity(this.getAxisH() * this.moveSpeed * 30, this.getAxisV() * this.moveSpeed * 30)
             }
         })
 
+        keySPACE.on('down', (key, event) => {
+            console.log('Space pressed!');
+            let hitboxX = this.hitbox.x - this.hitbox.width/2;
+            let hitboxY = this.hitbox.x - this.hitbox.height/2;
+            let within = scene.physics.overlapRect(hitboxX, hitboxY, this.hitbox.width, this.hitbox.height);
+            this.checkHitbox(within);
+        });
         // Create animations
+
     }
 
     update() {
 
-        if(!this.movementLock) this.setVelocity(this.getAxisH() * this.moveSpeed, this.getAxisV() * this.moveSpeed)
+        if(!this.movementLock) {
+            this.setVelocity(this.getAxisH() * this.moveSpeed, this.getAxisV() * this.moveSpeed)
+            if( this.getAxisH() || this.getAxisV() ) {
+                this.hitbox.x = this.x + 30 * this.getAxisH()
+                this.hitbox.y = this.y + 30 * this.getAxisV()
+            }
+        }
         /*
         if (keyA.isDown) {
             // Play left walk anim
@@ -91,5 +110,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             return 1;
         }
         return 0;
+    }
+
+    checkHitbox(within) {
+        console.log(within.length + ' in hitbox!')
+        // For every enemy in Hitbox:
+            // Kill enemy
     }
 }
