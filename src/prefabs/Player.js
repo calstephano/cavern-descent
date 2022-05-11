@@ -6,11 +6,30 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.moveSpeed = game.settings.moveSpeed; // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
-        // Create animations
 
+        this.movementLock = false;
+
+        // Bind keys
+        let keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+
+        // Attack event handling
+
+        keySHIFT.on('down', (key, event) => {
+            console.log('Shift pressed!');
+            // Use movementLock when there is an animation
+            //this.movementLock = true;
+            if(this.getAxisH() || this.getAxisV()){
+                this.setVelocity(this.getAxisH() * this.moveSpeed * 30, this.getAxisV() * this.moveSpeed * 30)
+            }
+        })
+
+        // Create animations
     }
 
     update() {
+
+        if(!this.movementLock) this.setVelocity(this.getAxisH() * this.moveSpeed, this.getAxisV() * this.moveSpeed)
+        /*
         if (keyA.isDown) {
             // Play left walk anim
             this.setVelocity(-this.moveSpeed, 0);
@@ -39,5 +58,38 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 // Play down idle anim
             }
         }
+        */
+    }
+
+    // dash() {
+    //     console.log('Shift pressed!');
+    //     if(this.getAxisH() && this.getAxisV()){
+    //         this.setVelocity(this.getAxisH() * this.moveSpeed * 3, this.getAxisV() * this.moveSpeed * 3)
+    //     }
+    // }
+
+    // Taking a page out of Unity's getAxisRaw methods for movement
+    getAxisH() {
+        if (keyA.isDown && keyD.isDown){
+            return 0;
+        }
+        else if (keyA.isDown) {
+            return -1;
+        } else if (keyD.isDown) {
+            return 1;
+        }
+        return 0;
+    }
+
+    getAxisV() {
+        if (keyW.isDown && keyS.isDown){
+            return 0;
+        }
+        else if (keyW.isDown) {
+            return -1;
+        } else if (keyS.isDown) {
+            return 1;
+        }
+        return 0;
     }
 }
