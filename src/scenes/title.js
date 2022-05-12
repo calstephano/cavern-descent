@@ -12,6 +12,9 @@ class Title extends Phaser.Scene {
 
         game.settings = {
             moveSpeed: 200,
+            stamina: 40,
+            staminaYPos: 20,
+            staminaRegen: 0.5
         };
 
         // Delete everything after this line, these are for testing

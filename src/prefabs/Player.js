@@ -15,11 +15,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.hitbox = scene.add.rectangle(0, 0, 20, 20).setStrokeStyle(1, 0xFFFF00);
         
         // Add dash cooldown visualized by bar
-        this.dashBar = scene.add.rectangle(this.x - 20, this.y - 50, 40, 3, 0x00FF00).setOrigin(0, 0.5);
+        this.dashBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.staminaYPos, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);
 
         // Bind keys
         let keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // Debug Key
+        let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
 
         // Attack event handling
 
@@ -31,6 +34,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.dashBar.width = 0;
                 this.setVelocity(this.getAxisH() * this.moveSpeed * 30, this.getAxisV() * this.moveSpeed * 30)
                 if(this.weaponUse) { // If false, the dash is just mobility
+                    console.log('KILL DASH');
                     // Kill enemies that got hit by dash
                 }
             }
@@ -41,10 +45,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if(this.weaponUse) {
                 let hitboxX = this.hitbox.x - this.hitbox.width/2;
                 let hitboxY = this.hitbox.y - this.hitbox.height/2;
-                console.log(' Corner: ' + hitboxX + ', ' + hitboxY)
+                //console.log(' Corner: ' + hitboxX + ', ' + hitboxY)
                 let within = scene.physics.overlapRect(hitboxX, hitboxY, this.hitbox.width, this.hitbox.height);
                 this.checkHitbox(within);
             }
+        });
+
+        keyK.on('down', (key, event) => {
+            if(this.weaponUse) this.disableWeapon();
+            else this.enableWeapon();
         });
         // Create animations
 
@@ -61,10 +70,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
         }
         // Update dash bar
-        this.dashBar.x = this.x - 20;
-        this.dashBar.y = this.y - 50;
-        if(this.dashBar.width < 40) {
-            this.dashBar.width += 0.5;
+        this.dashBar.x = this.x - game.settings.stamina/2;
+        this.dashBar.y = this.y - game.settings.staminaYPos;
+        if(this.dashBar.width < game.settings.stamina) {
+            this.dashBar.width += game.settings.staminaRegen;
         }
         /*
         if (keyA.isDown) {
@@ -131,18 +140,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     checkHitbox(within) {
-        console.log(within.length + ' in hitbox!')
+        console.log('ATTACK: ' + within.length + ' in hitbox!')
         // For every enemy in Hitbox:
             // Kill enemy
     }
 
     // For clarity and use outside of class
     enableWeapon() {
+        console.log('Weapons enabled!')
         this.weaponUse = true;
     }
 
     // For clarity and use outside of class
     disableWeapon() {
+        console.log('Weapons disabled!')
         this.weaponUse = false;
     }
 }
