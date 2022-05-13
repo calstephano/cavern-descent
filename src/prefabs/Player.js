@@ -12,7 +12,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.weaponUse = true;
 
         // Create hitbox for sword
-        this.hitbox = scene.add.rectangle(0, 0, 20, 20).setStrokeStyle(1, 0xFFFF00);
+        this.hitbox = scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize).setStrokeStyle(1, 0xFFFF00);
         
         // Add dash cooldown visualized by bar
         this.dashBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.staminaYPos, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);

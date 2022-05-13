@@ -14,7 +14,8 @@ class Title extends Phaser.Scene {
             moveSpeed: 200,
             stamina: 40,
             staminaYPos: 20,
-            staminaRegen: 0.5
+            staminaRegen: 0.5,
+            attackSize: 20
         };
 
         // Delete everything after this line, these are for testing
@@ -27,6 +28,9 @@ class Title extends Phaser.Scene {
 
         // Add player
         this.playertest = new Player(this, 100, 100, 'test');
+        
+        // Add enemy
+        this.enemyTest = new BasicEnemy(this, 500, 500, 'test', 0, this.playertest, 200, 150);
 
         // Add world bounds to physics
         this.physics.world.setBounds(0,0, game.config.width, game.config.height);
@@ -40,5 +44,6 @@ class Title extends Phaser.Scene {
 
     update() {
         this.playertest.update();
+        this.enemyTest.update();
     }
 }
