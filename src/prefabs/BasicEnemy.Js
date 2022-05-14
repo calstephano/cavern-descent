@@ -5,7 +5,7 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.target = target;   // Generally, the player will be the target
-        this.range = range;     // Range set to prevent enemy from detecting player on the other side of map
+        this.detectRange = range;     // Range set to prevent enemy from detecting player on the other side of map
         this.moveSpeed = speed;
 
         this.playerDetected = false;    // Enemies start with no vision of player
@@ -14,23 +14,23 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.range && !this.playerDetected) {
+        if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.detectRange && !this.playerDetected) {
             this.playerDetected = true;
         }
 
         // Move the enemy towards the player if detected
         if (this.playerDetected) {
-            if(this.x < this.target.x) {
+            if(this.x < this.target.x - 5) {
                 this.setVelocityX(this.moveSpeed);
-            } else if (this.x > this.target.x) {
+            } else if (this.x > this.target.x + 5) {
                 this.setVelocityX(-this.moveSpeed);
             } else {
                 this.setVelocityX(0);
             }
 
-            if(this.y < this.target.y) {
+            if(this.y < this.target.y - 5) {
                 this.setVelocityY(this.moveSpeed);
-            } else if (this.y > this.target.y) {
+            } else if (this.y > this.target.y + 5) {
                 this.setVelocityY(-this.moveSpeed);
             } else {
                 this.setVelocityY(0);

@@ -14,6 +14,15 @@ let config = {
         target: 60,
         forceSetTimeOut: true
     },
+    plugins: {
+        scene: [
+            {
+                key: 'PhaserRaycaster',
+                plugin: PhaserRaycaster,
+                mapping: 'raycasterPlugin'
+            }
+        ]
+    }
 }
 
 let game = new Phaser.Game(config);
