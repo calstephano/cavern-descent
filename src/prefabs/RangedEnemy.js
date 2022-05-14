@@ -42,9 +42,9 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(0);
         }
 
-        if(this.y < this.target.y - 5) {
+        if(this.y < this.target.y) {
             this.setVelocityY(this.moveSpeed);
-        } else if (this.y > this.target.y + 5) {
+        } else if (this.y > this.target.y) {
             this.setVelocityY(-this.moveSpeed);
         } else {
             this.setVelocityY(0);

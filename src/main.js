@@ -3,11 +3,11 @@ let config = {
     width: 1600,
     height: 900,
     autoCenter: true,
-    scene: [ Title ],
+    scene: [ Load, Title, Level1 ],
     physics: {
         default: "arcade",
         arcade: {
-            debug: false
+            debug: true
         }
     },
     fps: {

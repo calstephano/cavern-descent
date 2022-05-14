@@ -1,7 +1,7 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
-        scene.add.existing(this);
+        scene.add.existing(this).setOrigin(0.5);
         scene.physics.add.existing(this);
 
         this.moveSpeed = game.settings.moveSpeed; // Assign move speed
