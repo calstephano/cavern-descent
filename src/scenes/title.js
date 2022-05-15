@@ -15,7 +15,8 @@ class Title extends Phaser.Scene {
             stamina: 40,
             staminaYPos: 20,
             staminaRegen: 0.5,
-            attackSize: 20
+            attackSize: 40,
+            health: 3
         };
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

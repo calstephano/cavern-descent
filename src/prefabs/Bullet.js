@@ -10,4 +10,9 @@ class Bullet extends Phaser.Physics.Arcade.Image {
         this.setVelocity(velocityX, velocityY);
         this.rotation = angle;
     }
+
+    kill() {
+        // When die anim finishes,
+        this.destroy();
+    }
 }

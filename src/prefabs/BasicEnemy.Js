@@ -37,4 +37,9 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
             }
         }
     }
+
+    kill() {
+        // When die anim finishes,
+        this.destroy();
+    }
 }

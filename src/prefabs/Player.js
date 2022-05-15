@@ -7,12 +7,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.moveSpeed = game.settings.moveSpeed; // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
 
+        this.health = game.settings.health;
         this.movementLock = false;
 
         this.weaponUse = true;
 
         // Create hitbox for sword
         this.hitbox = scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize).setStrokeStyle(1, 0xFFFF00);
+        this.hitbox = scene.physics.add.existing(this.hitbox, 0)
         
         // Add dash cooldown visualized by bar
         this.dashBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.staminaYPos, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);
@@ -25,7 +27,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
 
         // Attack event handling
-
+        scene.physics.add.overlap(this.hitbox, scene.EGroups.BEGroup, this.checkHitbox, null, this);
+        scene.physics.add.overlap(this.hitbox, scene.EGroups.REGroup, this.checkHitbox, null, this);
+        scene.physics.add.overlap(this.hitbox, scene.EGroups.bulletGroup, this.checkHitbox, null, this);
+        scene.physics.add.overlap(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
+        scene.physics.add.overlap(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
         keySHIFT.on('down', (key, event) => {
             console.log('Shift pressed!');
             // Use movementLock when there is an animation or more conditions to stop the dash
@@ -35,6 +41,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.setVelocity(this.getAxisH() * this.moveSpeed * 30, this.getAxisV() * this.moveSpeed * 30)
                 if(this.weaponUse) { // If false, the dash is just mobility
                     console.log('KILL DASH');
+                    this.weaponActive = true
                     // Kill enemies that got hit by dash
                 }
             }
@@ -43,11 +50,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         keySPACE.on('down', (key, event) => {
             console.log('Space pressed!');
             if(this.weaponUse) {
-                let hitboxX = this.hitbox.x - this.hitbox.width/2;
-                let hitboxY = this.hitbox.y - this.hitbox.height/2;
+                this.weaponActive = true;
+                // let hitboxX = this.hitbox.x - this.hitbox.width/2;
+                // let hitboxY = this.hitbox.y - this.hitbox.height/2;
                 //console.log(' Corner: ' + hitboxX + ', ' + hitboxY)
-                let within = scene.physics.overlapRect(hitboxX, hitboxY, this.hitbox.width, this.hitbox.height);
-                this.checkHitbox(within);
+                scene.EGroups.BEGroup.getChildren().forEach(enemy => {})
+                //this.checkHitbox(within);
             }
         });
 
@@ -68,6 +76,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.hitbox.y = this.y + 30 * this.getAxisV()
             }
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
+            this.weaponActive = false;
         }
         // Update dash bar
         this.dashBar.x = this.x - game.settings.stamina/2;
@@ -139,10 +148,33 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         return 0;
     }
 
-    checkHitbox(within) {
+    checkHitbox(hitbox, enemy) {
+        /*
         console.log('ATTACK: ' + within.length + ' in hitbox!')
-        // For every enemy in Hitbox:
-            // Kill enemy
+        within.forEach(target => {
+            console.log(this.scene.EGroups.BEGroup.contains(target))
+            if(this.scene.EGroups.BEGroup.contains(target)){
+                this.scene.EGroups.BEGroup.killAndHide(target);
+                this.scene.EGroups.BEGroup.remove(target);
+                target.destroy();
+            }
+        });
+        */
+        console.log(enemy);
+        if(this.weaponActive) {
+            enemy.kill();
+        }
+    }
+
+    enemyCollide(player, enemy){
+        if(this.weaponActive) {
+            enemy.kill();
+        }
+        else {
+            this.health -= 1;
+            let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, player.x, player.y);
+            // Use angle to determine knockback
+        }
     }
 
     // For clarity and use outside of class

@@ -6,25 +6,41 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
 
         this.target = target;           // Generally, the player will be the target
         this.detectRange = range;       // Range set to prevent enemy from detecting player on the other side of map
-        this.attackRange = range * 1.5; // Attack range set higher to allow enemy to attack from a range
-        this.escapeRange = range * 0.33;  // Range at which the enemy will try to escape
+        
         this.moveSpeed = speed;
 
         this.playerDetected = false;    // Enemies start with no vision of player
+        this.scene = scene;
+
+        // Currently hardcoded, change in the future
+        this.attackRange = range * 1.5; // Attack range set higher to allow enemy to attack from a range
+        this.escapeRange = range * 0.5;  // Range at which the enemy will try to escape
+
+        this.attackDelay = 2000;
+        this.attackCountdown = 2000;
 
         // Create anims
     }
 
-    update() {
+    update(time, delta) {
         if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.detectRange && !this.playerDetected) {
             this.playerDetected = true;
             console.log('!!!')
         }
-
+        
         if (this.playerDetected) {
-            if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) >= this.detectRange){
+            if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.attackRange) {
+                this.attackCountdown -= delta;
+                if(this.attackCountdown <= 0) {
+                    this.attackCountdown = this.attackDelay;
+                    let angle = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y);
+                    this.scene.EGroups.fireBullet(this.x, this.y, 400, angle);
+                }
+            }
+            if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) >= this.detectRange) {
                 this.approach();
             } else if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.escapeRange) {
+                this.attackCountdown = this.attackDelay;
                 this.flee();
             }
             else {
@@ -67,5 +83,10 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
         } else {
             this.setVelocityY(0);
         }
+    }
+
+    kill() {
+        // When die anim finishes,
+        this.destroy();
     }
 }
