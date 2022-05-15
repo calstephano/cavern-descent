@@ -22,8 +22,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // Visualize heath via bar (probably temporary)
         this.healthBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.hBarOffset, game.settings.stamina, 3, 0xFF0000).setOrigin(0,0.5);
         // Bind keys
-        let keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-        keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        this.keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Debug Key
         let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
@@ -35,7 +35,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.collider(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
         scene.physics.add.collider(this, scene.EGroups.REGroup, this.enemyCollide, null, this);
         scene.physics.add.collider(this, scene.EGroups.bulletGroup, this.bulletCollide, null, this);
-        keySHIFT.on('down', (key, event) => {
+        this.keySHIFT.on('down', (key, event) => {
             console.log('Shift pressed!');
             // Use movementLock when there is an animation or more conditions to stop the dash
             //this.movementLock = true;
@@ -50,7 +50,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         })
 
-        keySPACE.on('down', (key, event) => {
+        this.keySPACE.on('down', (key, event) => {
             console.log('Space pressed!');
             if(this.weaponUse) {
                 this.weaponActive = true;
@@ -78,6 +78,25 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if( this.getAxisH() || this.getAxisV() ) {
                 this.hitbox.x = this.x + 30 * this.getAxisH()
                 this.hitbox.y = this.y + 30 * this.getAxisV()
+                if (this.direction == 'left') {
+                    // Play left walk anim
+                } else if (this.direction == 'right') {
+                    // Play right walk anim
+                } else if (this.direction == 'up') {
+                    // Play up walk anim
+                } else {
+                    // Play down walk anim
+                }
+            } else {
+                if (this.direction == 'left') {
+                    // Play left idle anim
+                } else if (this.direction == 'right') {
+                    // Play right idle anim
+                } else if (this.direction == 'up') {
+                    // Play up idle anim
+                } else {
+                    // Play down idle anim
+                }
             }
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
             this.weaponActive = false;
@@ -122,12 +141,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         */
     }
 
-    // dash() {
-    //     console.log('Shift pressed!');
-    //     if(this.getAxisH() && this.getAxisV()){
-    //         this.setVelocity(this.getAxisH() * this.moveSpeed * 3, this.getAxisV() * this.moveSpeed * 3)
-    //     }
-    // }
 
     // Taking a page out of Unity's getAxisRaw methods for movement
     getAxisH() {
@@ -152,6 +165,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             return 1;
         }
         return 0;
+    }
+
+    getDirection(){
+        if(this.getAxisV == 1) this.direction = 'down'
+        if(this.getAxisV == -1) this.direction = 'up'
+        if(this.getAxisH == -1) this.direction = 'left'
+        if(this.getAxisH == 1) this.direction = 'right'
     }
 
     checkHitbox(hitbox, enemy) {
@@ -213,5 +233,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     updateHealth(){
         this.healthBar.width = game.settings.stamina * (this.health / this.maxHealth);
+    }
+
+    kill() {
+        this.hitbox.destroy();
+        this.dashBar.destroy();
+        this.healthBar.destroy();
+        this.keySHIFT.enabled = false;
+        this.keySPACE.enabled = false;
+        this.destroy();
     }
 }

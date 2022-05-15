@@ -88,6 +88,7 @@ class Level1 extends Phaser.Scene {
         }
         if(this.playertest.health == 0) {
             this.gameOver = true;
+            this.playertest.kill();
             // Figure out how to safely remove the player
         }
         
