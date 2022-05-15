@@ -13,7 +13,8 @@ class Title extends Phaser.Scene {
         game.settings = {
             moveSpeed: 200,
             stamina: 40,
-            staminaYPos: 20,
+            sBarOffset: 20,
+            hBarOffset: 30,
             staminaRegen: 0.5,
             attackSize: 40,
             health: 3

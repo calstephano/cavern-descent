@@ -8,6 +8,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.direction = 'down';                  // Store the direction after walking
 
         this.health = game.settings.health;
+        this.maxHealth = game.settings.health;
         this.movementLock = false;
 
         this.weaponUse = true;
@@ -17,8 +18,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.hitbox = scene.physics.add.existing(this.hitbox, 0)
         
         // Add dash cooldown visualized by bar
-        this.dashBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.staminaYPos, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);
-
+        this.dashBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.sBarOffset, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);
+        // Visualize heath via bar (probably temporary)
+        this.healthBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.hBarOffset, game.settings.stamina, 3, 0xFF0000).setOrigin(0,0.5);
         // Bind keys
         let keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -30,8 +32,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.overlap(this.hitbox, scene.EGroups.BEGroup, this.checkHitbox, null, this);
         scene.physics.add.overlap(this.hitbox, scene.EGroups.REGroup, this.checkHitbox, null, this);
         scene.physics.add.overlap(this.hitbox, scene.EGroups.bulletGroup, this.checkHitbox, null, this);
-        scene.physics.add.overlap(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
-        scene.physics.add.overlap(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
+        scene.physics.add.collider(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
+        scene.physics.add.collider(this, scene.EGroups.REGroup, this.enemyCollide, null, this);
+        scene.physics.add.collider(this, scene.EGroups.bulletGroup, this.bulletCollide, null, this);
         keySHIFT.on('down', (key, event) => {
             console.log('Shift pressed!');
             // Use movementLock when there is an animation or more conditions to stop the dash
@@ -63,7 +66,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if(this.weaponUse) this.disableWeapon();
             else this.enableWeapon();
         });
-        // Create animations
+        // Player anims should be created in Load.js
 
     }
 
@@ -71,6 +74,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if(!this.movementLock) {
             this.setVelocity(this.getAxisH() * this.moveSpeed, this.getAxisV() * this.moveSpeed)
+            // Determine direction and play anims based on that
             if( this.getAxisH() || this.getAxisV() ) {
                 this.hitbox.x = this.x + 30 * this.getAxisH()
                 this.hitbox.y = this.y + 30 * this.getAxisV()
@@ -80,7 +84,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
         // Update dash bar
         this.dashBar.x = this.x - game.settings.stamina/2;
-        this.dashBar.y = this.y - game.settings.staminaYPos;
+        this.dashBar.y = this.y - game.settings.sBarOffset;
+        this.healthBar.x = this.x - game.settings.stamina/2;
+        this.healthBar.y = this.y - game.settings.hBarOffset;
         if(this.dashBar.width < game.settings.stamina) {
             this.dashBar.width += game.settings.staminaRegen;
         }
@@ -160,7 +166,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         });
         */
-        console.log(enemy);
+        //console.log(enemy);
         if(this.weaponActive) {
             enemy.kill();
         }
@@ -171,10 +177,26 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             enemy.kill();
         }
         else {
-            this.health -= 1;
+            if(player.health > 0) player.health -= 1;
+            this.updateHealth();
+            enemy.kill();
             let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, player.x, player.y);
             // Use angle to determine knockback
+            let vX = 3000 * Math.cos(angle);
+            let vY = 3000 * Math.sin(angle);
+            player.setVelocity(vX, vY);
         }
+    }
+
+    bulletCollide(player, bullet){
+        if(player.health > 0) player.health -= 1;
+        this.updateHealth();
+        bullet.kill()
+        let angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, player.x, player.y);
+        // Use angle to determine knockback
+        let vX = 3000 * Math.cos(angle);
+        let vY = 3000 * Math.sin(angle);
+        player.setVelocity(vX, vY);
     }
 
     // For clarity and use outside of class
@@ -187,5 +209,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     disableWeapon() {
         console.log('Weapons disabled!')
         this.weaponUse = false;
+    }
+
+    updateHealth(){
+        this.healthBar.width = game.settings.stamina * (this.health / this.maxHealth);
     }
 }

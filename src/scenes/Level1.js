@@ -4,7 +4,7 @@ class Level1 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('test', './assets/Square.png');
+        this.load.image('protomap', './assets/Concept_Map.png');
         this.load.image('tile', './assets/dungeontile.png');
         this.load.tilemapTiledJSON('tilemap', './assets/map.json')
     }
@@ -17,13 +17,17 @@ class Level1 extends Phaser.Scene {
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         
+        /*
         // Map test
         this.map = this.make.tilemap({key: 'tilemap'});
         this.tileset = this.map.addTilesetImage('dungeontile', 'tile')
         this.map.createLayer('ground', this.tileset).setScale(3);
         this.walls = this.map.createLayer('wall', this.tileset).setScale(3);
         this.walls.setCollisionByProperty({ collides: true});
-        
+        */
+        this.map = this.add.image(0, 0, 'protomap').setOrigin(0);
+        this.map.setScale(2);
+        this.map.setAlpha(0.5);
 
         // Raycaster Test
         // this.raycaster = this.raycasterPlugin.createRaycaster({
@@ -54,7 +58,7 @@ class Level1 extends Phaser.Scene {
         this.EGroups.addEnemyGroups();
 
         // Add player
-        this.playertest = new Player(this, 100, 100, 'test');
+        this.playertest = new Player(this, 30, 625, 'test');
         this.physics.add.collider(this.playertest, this.walls)
 
         // Add enemy
@@ -67,24 +71,25 @@ class Level1 extends Phaser.Scene {
         //this.bulletTest = new Bullet(this, 1000, 300, 'test', 100, Phaser.Math.Angle.Between(this.rangedEnemyTest.x, this.rangedEnemyTest.y, this.playertest.x, this.playertest.y));
         
         // Add world bounds to physics
-        this.physics.world.setBounds(0,0, game.config.width, game.config.height);
+        this.physics.world.setBounds(0,0, this.map.width * this.map.scale, this.map.height* this.map.scale);
         this.playertest.body.setCollideWorldBounds(true);
 
         // Camera Test
-        this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
-        this.cameras.main.setZoom(1.5);
+        this.cameras.main.setBounds(0, 0, this.map.width * this.map.scale, this.map.height * this.map.scale);
+        this.cameras.main.setZoom(2);
         this.cameras.main.startFollow(this.playertest, true, 0.1, 0.1);
-
-        
 
         
     }
 
     update() {
-        this.playertest.update();
-        //this.enemyTest.update();
-        //this.rangedEnemyTest.update();
-        // this.ray.setOrigin(this.playertest.x, this.playertest.y);
-        // this.intersections = this.ray.castCircle();
+        if(!this.gameOver) {
+            this.playertest.update();
+        }
+        if(this.playertest.health == 0) {
+            this.gameOver = true;
+            // Figure out how to safely remove the player
+        }
+        
     }
 }
