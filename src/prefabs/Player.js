@@ -25,9 +25,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        // Debug Key
-        let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
-
         // Attack event handling
         scene.physics.add.overlap(this.hitbox, scene.EGroups.BEGroup, this.checkHitbox, null, this);
         scene.physics.add.overlap(this.hitbox, scene.EGroups.REGroup, this.checkHitbox, null, this);
@@ -35,6 +32,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.collider(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
         scene.physics.add.collider(this, scene.EGroups.REGroup, this.enemyCollide, null, this);
         scene.physics.add.collider(this, scene.EGroups.bulletGroup, this.bulletCollide, null, this);
+
+        // Dash attack
         this.keySHIFT.on('down', (key, event) => {
             console.log('Shift pressed!');
             // Use movementLock when there is an animation or more conditions to stop the dash
@@ -50,6 +49,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
         })
 
+        // Normal atttack
         this.keySPACE.on('down', (key, event) => {
             console.log('Space pressed!');
             if(this.weaponUse) {
@@ -61,6 +61,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 //this.checkHitbox(within);
             }
         });
+
+        // Debug Key
+        let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
 
         keyK.on('down', (key, event) => {
             if(this.weaponUse) this.disableWeapon();
@@ -109,36 +112,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if(this.dashBar.width < game.settings.stamina) {
             this.dashBar.width += game.settings.staminaRegen;
         }
-        /*
-        if (keyA.isDown) {
-            // Play left walk anim
-            this.setVelocity(-this.moveSpeed, 0);
-            this.direction = 'left';
-        } else if (keyD.isDown) {
-            // Play right walk anim
-            this.setVelocity(this.moveSpeed, 0);
-            this.direction = 'right';
-        } else if (keyW.isDown) {
-            // Play up walk anim
-            this.setVelocity(0, -this.moveSpeed);
-            this.direction = 'up';
-        } else if (keyS.isDown) {
-            // Play down walk anim
-            this.setVelocity(0, this.moveSpeed);
-            this.direction = 'down';
-        } else {
-            this.setVelocity(0);
-            if (this.direction == 'left') {
-                // Play left idle anim
-            } else if (this.direction == 'right') {
-                // Play right idle anim
-            } else if (this.direction == 'up') {
-                // Play up idle anim
-            } else {
-                // Play down idle anim
-            }
-        }
-        */
     }
 
 
@@ -175,18 +148,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     checkHitbox(hitbox, enemy) {
-        /*
-        console.log('ATTACK: ' + within.length + ' in hitbox!')
-        within.forEach(target => {
-            console.log(this.scene.EGroups.BEGroup.contains(target))
-            if(this.scene.EGroups.BEGroup.contains(target)){
-                this.scene.EGroups.BEGroup.killAndHide(target);
-                this.scene.EGroups.BEGroup.remove(target);
-                target.destroy();
-            }
-        });
-        */
         //console.log(enemy);
+        // Kill enemy if weapon is active
         if(this.weaponActive) {
             enemy.kill();
         }
@@ -235,6 +198,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.healthBar.width = game.settings.stamina * (this.health / this.maxHealth);
     }
 
+    // Use when Game over/player HP reaches 0
     kill() {
         this.hitbox.destroy();
         this.dashBar.destroy();
