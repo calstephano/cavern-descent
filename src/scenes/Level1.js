@@ -16,7 +16,7 @@ class Level1 extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         /*
         // Map test
         this.map = this.make.tilemap({key: 'tilemap'});
@@ -60,6 +60,7 @@ class Level1 extends Phaser.Scene {
         // Add player
         this.playertest = new Player(this, 30, 625, 'test');
         this.physics.add.collider(this.playertest, this.walls)
+        this.gameOver = false
 
         // Add enemy
         this.EGroups.addBasicEnemy(500, 500, 'test', 0, this.playertest, 200, 150);
@@ -79,17 +80,22 @@ class Level1 extends Phaser.Scene {
         this.cameras.main.setZoom(2);
         this.cameras.main.startFollow(this.playertest, true, 0.1, 0.1);
 
-        
+        this.demoText = this.add.text(400, 225, "Map is just an image. No wall collision yet").setScrollFactor(0);
     }
 
     update() {
         if(!this.gameOver) {
             this.playertest.update();
         }
-        if(this.playertest.health == 0) {
+        if(this.playertest.health == 0 && !this.gameOver) {
             this.gameOver = true;
             this.playertest.kill();
-            // Figure out how to safely remove the player
+            this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to return').setScrollFactor(0);
+        }
+        if(this.gameOver){
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                this.scene.start('titleScene');
+            }
         }
         
     }
