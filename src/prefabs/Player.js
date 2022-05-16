@@ -204,6 +204,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     updateHealth(){
+        this.hurtSFX.play();
         this.healthBar.width = game.settings.stamina * (this.health / this.maxHealth);
     }
 
