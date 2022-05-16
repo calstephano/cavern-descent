@@ -3,6 +3,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this).setOrigin(0.5);
         scene.physics.add.existing(this);
+        this.body.setSize(this.width, this.height/2);
+        this.body.setOffset(0, this.height/2)
 
         this.moveSpeed = game.settings.moveSpeed; // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
@@ -17,6 +19,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.hitbox = scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize).setStrokeStyle(1, 0xFFFF00);
         this.hitbox = scene.physics.add.existing(this.hitbox, 0)
         
+        // Sound Effects
+        this.attackSFX = scene.sound.add('attack');
+        this.hurtSFX = scene.sound.add('hurt');
+        this.dashSFX = scene.sound.add('dash');
+
         // Add dash cooldown visualized by bar
         this.dashBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.sBarOffset, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);
         // Visualize heath via bar (probably temporary)
@@ -44,6 +51,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 if(this.weaponUse) { // If false, the dash is just mobility
                     console.log('KILL DASH');
                     this.weaponActive = true
+                    this.dashSFX.play();
                     // Kill enemies that got hit by dash
                 }
             }
@@ -54,6 +62,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             console.log('Space pressed!');
             if(this.weaponUse) {
                 this.weaponActive = true;
+                this.attackSFX.play();
                 // let hitboxX = this.hitbox.x - this.hitbox.width/2;
                 // let hitboxY = this.hitbox.y - this.hitbox.height/2;
                 //console.log(' Corner: ' + hitboxX + ', ' + hitboxY)

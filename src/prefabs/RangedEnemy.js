@@ -34,7 +34,7 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
                 if(this.attackCountdown <= 0) {
                     this.attackCountdown = this.attackDelay;
                     let angle = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y);
-                    this.scene.EGroups.fireBullet(this.x, this.y, 400, angle);
+                    this.scene.EGroups.fireBullet(this.x, this.y, 350, angle);
                 }
             }
             if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) >= this.detectRange) {

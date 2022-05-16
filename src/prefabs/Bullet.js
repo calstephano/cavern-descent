@@ -12,8 +12,8 @@ class Bullet extends Phaser.Physics.Arcade.Image {
 
         this.body.setCollideWorldBounds(true);
         this.body.onWorldBounds = true;
-        this.body.world.on('worldbounds', () => {
-            this.destroy();
+        this.body.world.on('worldbounds', (body) => {
+            if(body.gameObject === this) this.destroy();
         });
     }
 

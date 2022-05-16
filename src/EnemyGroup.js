@@ -42,6 +42,13 @@ class EnemyGroups {
         this.bulletGroup.add(bullet);
     }
 
+    noneAlive() {
+        if (!this.BEGroup.getLength() && !this.REGroup.getLength()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     update() {
         //console.log(this.BEGroup.getChildren().length)
     }
