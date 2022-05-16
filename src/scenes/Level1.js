@@ -8,7 +8,7 @@ class Level1 extends Phaser.Scene {
         // Add enemy images/atlases here
         this.load.image('enemy1', './assets/tempEnemy1.png');
         this.load.image('enemy2', './assets/tempEnemy2.png');
-        this.load.image('bullet', './assets/square.png');
+        this.load.image('bullet', './assets/Square.png');
     }
 
     create() {
