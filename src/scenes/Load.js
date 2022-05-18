@@ -9,6 +9,7 @@ class Load extends Phaser.Scene {
         this.load.image('test', 'TempPlayer.png');
         this.load.atlas('dashAttackAtlas', 'TempDashAttacks.png', 'DashAttackTemp.json');
         this.load.atlas('idleAtlas', 'IdleTemp.png', 'IdleTemp.json');
+        this.load.atlas('attackAtlas', 'WideAttackTemp.png', 'TempWideAttack.json')
         this.load.audio('attack', 'tempPlayerAttack.wav')
         this.load.audio('hurt', 'tempPlayerHurt.wav');
         this.load.audio('dash', 'tempPlayerDash.wav')
@@ -47,6 +48,54 @@ class Load extends Phaser.Scene {
             repeat: -1
         });
         
+        this.anims.create({
+            key: 'attackLeft',
+            frames: this.anims.generateFrameNames('attackAtlas', {
+                prefix: 'WideAttackLeft_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 18,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'attackRight',
+            frames: this.anims.generateFrameNames('attackAtlas', {
+                prefix: 'WideAttackRight_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 18,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'attackUp',
+            frames: this.anims.generateFrameNames('attackAtlas', {
+                prefix: 'WideAttackUp_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 18,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'attackDown',
+            frames: this.anims.generateFrameNames('attackAtlas', {
+                prefix: 'WideAttackDown_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 18,
+            repeat: 0
+        });
 
         this.anims.create({
             key: 'dashAttackLeft',
@@ -60,7 +109,6 @@ class Load extends Phaser.Scene {
             frameRate: 12,
             repeat: 0
         });
-
         this.anims.create({
             key: 'dashAttackRight',
             frames: this.anims.generateFrameNames('dashAttackAtlas', {
@@ -73,7 +121,6 @@ class Load extends Phaser.Scene {
             frameRate: 12,
             repeat: 0
         });
-
         this.anims.create({
             key: 'dashAttackUp',
             frames: this.anims.generateFrameNames('dashAttackAtlas', {
@@ -86,7 +133,6 @@ class Load extends Phaser.Scene {
             frameRate: 12,
             repeat: 0
         });
-
         this.anims.create({
             key: 'dashAttackDown',
             frames: this.anims.generateFrameNames('dashAttackAtlas', {

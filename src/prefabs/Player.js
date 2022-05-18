@@ -52,7 +52,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     console.log(this.direction);
                     this.weaponActive = true;
                     if (this.direction == 'left') {
-                        console.log('LEFT')
                         this.play('dashAttackLeft')
                     } else if (this.direction == 'right') {
                         this.play('dashAttackRight')
@@ -71,11 +70,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keySPACE.on('down', (key, event) => {
             console.log('Space pressed!');
             if(this.weaponUse) {
+                this.movementLock = true;
+                this.setVelocity(0);
                 this.weaponActive = true;
                 this.attackSFX.play();
-                // let hitboxX = this.hitbox.x - this.hitbox.width/2;
-                // let hitboxY = this.hitbox.y - this.hitbox.height/2;
-                //console.log(' Corner: ' + hitboxX + ', ' + hitboxY)
+                if (this.direction == 'left') {
+                    this.play('attackLeft')
+                } else if (this.direction == 'right') {
+                    this.play('attackRight')
+                } else if (this.direction == 'up') {
+                    this.play('attackUp')
+                } else {
+                    this.play('attackDown')
+                }
                 scene.EGroups.BEGroup.getChildren().forEach(enemy => {})
                 //this.checkHitbox(within);
             }
@@ -144,6 +151,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.on('animationcomplete', () => {
+            console.log('Done')
             this.movementLock = false;
             this.weaponActive = false;
         })

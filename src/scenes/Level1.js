@@ -34,6 +34,7 @@ class Level1 extends Phaser.Scene {
         this.gameOver = false
 
         // Add enemy
+        // Enemies are currently loaded in through coordinates, will use tilemap to load these in later
         this.EGroups.addBasicEnemy(500, 500, 'enemy1', 0, this.playertest, 200, 100);
         this.EGroups.addBasicEnemy(520, 700, 'enemy1', 0, this.playertest, 200, 100);
         this.EGroups.addBasicEnemy(1200, 700, 'enemy1', 0, this.playertest, 200, 100);
