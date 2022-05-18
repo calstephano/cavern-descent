@@ -44,13 +44,23 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keySHIFT.on('down', (key, event) => {
             console.log('Shift pressed!');
             // Use movementLock when there is an animation or more conditions to stop the dash
-            //this.movementLock = true;
             if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
                 this.dashBar.width = 0;
-                this.setVelocity(this.getAxisH() * this.moveSpeed * 30, this.getAxisV() * this.moveSpeed * 30)
+                this.movementLock = true;
+                this.setVelocity(this.getAxisH() * this.moveSpeed * 3, this.getAxisV() * this.moveSpeed * 3)
                 if(this.weaponUse) { // If false, the dash is just mobility
-                    console.log('KILL DASH');
-                    this.weaponActive = true
+                    console.log(this.direction);
+                    this.weaponActive = true;
+                    if (this.direction == 'left') {
+                        console.log('LEFT')
+                        this.play('dashAttackLeft')
+                    } else if (this.direction == 'right') {
+                        this.play('dashAttackRight')
+                    } else if (this.direction == 'up') {
+                        this.play('dashAttackUp')
+                    } else {
+                        this.play('dashAttackDown')
+                    }
                     this.dashSFX.play();
                     // Kill enemies that got hit by dash
                 }
@@ -86,32 +96,43 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if(!this.movementLock) {
             this.setVelocity(this.getAxisH() * this.moveSpeed, this.getAxisV() * this.moveSpeed)
+            this.getDirection();
             // Determine direction and play anims based on that
             if( this.getAxisH() || this.getAxisV() ) {
-                this.hitbox.x = this.x + 30 * this.getAxisH()
-                this.hitbox.y = this.y + 30 * this.getAxisV()
                 if (this.direction == 'left') {
                     // Play left walk anim
+                    this.play('idleLeft', true);
                 } else if (this.direction == 'right') {
                     // Play right walk anim
+                    this.play('idleRight', true);
                 } else if (this.direction == 'up') {
                     // Play up walk anim
+                    this.play('idleUp', true);
                 } else {
                     // Play down walk anim
+                    this.play('idleDown', true);
                 }
             } else {
                 if (this.direction == 'left') {
                     // Play left idle anim
+                    this.play('idleLeft', true);
                 } else if (this.direction == 'right') {
                     // Play right idle anim
+                    this.play('idleRight', true);
                 } else if (this.direction == 'up') {
                     // Play up idle anim
+                    this.play('idleUp', true);
                 } else {
                     // Play down idle anim
+                    this.play('idleDown', true);
                 }
             }
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
-            this.weaponActive = false;
+        }
+
+        if( this.getAxisH() || this.getAxisV() ) {
+            this.hitbox.x = this.x + 30 * this.getAxisH()
+            this.hitbox.y = this.y + 30 * this.getAxisV()
         }
         // Update dash bar
         this.dashBar.x = this.x - game.settings.stamina/2;
@@ -121,6 +142,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if(this.dashBar.width < game.settings.stamina) {
             this.dashBar.width += game.settings.staminaRegen;
         }
+
+        this.on('animationcomplete', () => {
+            this.movementLock = false;
+            this.weaponActive = false;
+        })
     }
 
 
@@ -150,10 +176,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     getDirection(){
-        if(this.getAxisV == 1) this.direction = 'down'
-        if(this.getAxisV == -1) this.direction = 'up'
-        if(this.getAxisH == -1) this.direction = 'left'
-        if(this.getAxisH == 1) this.direction = 'right'
+        if(this.getAxisV() == 1) this.direction = 'down'
+        if(this.getAxisV() == -1) this.direction = 'up'
+        if(this.getAxisH() == -1) this.direction = 'left'
+        if(this.getAxisH() == 1) this.direction = 'right'
     }
 
     checkHitbox(hitbox, enemy) {
