@@ -9,7 +9,7 @@ class Load extends Phaser.Scene {
         this.load.image('test', 'TempPlayer.png');
         this.load.atlas('dashAttackAtlas', 'TempDashAttacks.png', 'DashAttackTemp.json');
         this.load.atlas('idleAtlas', 'IdleTemp.png', 'IdleTemp.json');
-        this.load.atlas('attackAtlas', 'WideAttackTemp.png', 'TempWideAttack.json')
+        this.load.atlas('attackAtlas', 'NEW.png', 'NEW.json')
         this.load.audio('attack', 'tempPlayerAttack.wav')
         this.load.audio('hurt', 'tempPlayerHurt.wav');
         this.load.audio('dash', 'tempPlayerDash.wav')

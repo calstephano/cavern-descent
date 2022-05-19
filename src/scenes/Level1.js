@@ -9,6 +9,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('enemy1', './assets/tempEnemy1.png');
         this.load.image('enemy2', './assets/tempEnemy2.png');
         this.load.image('bullet', './assets/Square.png');
+        this.load.image('darkness', './assets/darkness.png')
     }
 
     create() {
@@ -30,6 +31,7 @@ class Level1 extends Phaser.Scene {
 
         // Add player
         this.playertest = new Player(this, 30, 625, 'test');
+        
         this.physics.add.collider(this.playertest, this.walls)
         this.gameOver = false
 
@@ -53,11 +55,16 @@ class Level1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.playertest, true, 0.1, 0.1);
 
         this.demoText = this.add.text(400, 225, "Map is just an image. No wall collision yet\nWASD, Space, Shift").setScrollFactor(0);
+
+        this.darkness = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setOrigin(0.5);
+        this.darkness.setScale(5);
     }
 
     update() {
         if(!this.gameOver) {
             this.playertest.update();
+            this.darkness.x = this.playertest.x;
+            this.darkness.y = this.playertest.y;
         }
         if(this.playertest.health == 0 && !this.gameOver) {
             this.gameOver = true;
