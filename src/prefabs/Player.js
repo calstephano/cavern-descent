@@ -108,16 +108,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if( this.getAxisH() || this.getAxisV() ) {
                 if (this.direction == 'left') {
                     // Play left walk anim
-                    this.play('idleLeft', true);
+                    this.play('walkLeft', true);
                 } else if (this.direction == 'right') {
                     // Play right walk anim
-                    this.play('idleRight', true);
+                    this.play('walkRight', true);
                 } else if (this.direction == 'up') {
                     // Play up walk anim
-                    this.play('idleUp', true);
+                    this.play('walkUp', true);
                 } else {
                     // Play down walk anim
-                    this.play('idleDown', true);
+                    this.play('walkDown', true);
                 }
             } else {
                 if (this.direction == 'left') {
@@ -151,7 +151,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.on('animationcomplete', () => {
-            console.log('Done')
+            //console.log('Done')
             this.movementLock = false;
             this.weaponActive = false;
         })

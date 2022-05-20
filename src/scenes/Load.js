@@ -9,10 +9,11 @@ class Load extends Phaser.Scene {
         this.load.image('test', 'TempPlayer.png');
         this.load.atlas('dashAttackAtlas', 'TempDashAttacks.png', 'DashAttackTemp.json');
         this.load.atlas('idleAtlas', 'IdleTemp.png', 'IdleTemp.json');
-        this.load.atlas('attackAtlas', 'NEW.png', 'NEW.json')
-        this.load.audio('attack', 'tempPlayerAttack.wav')
+        this.load.atlas('walkAtlas', 'WalkingSpriteSheet.png', 'WalkingAnimation.json');
+        this.load.atlas('attackAtlas', 'NEW.png', 'NEW.json');
+        this.load.audio('attack', 'tempPlayerAttack.wav');
         this.load.audio('hurt', 'tempPlayerHurt.wav');
-        this.load.audio('dash', 'tempPlayerDash.wav')
+        this.load.audio('dash', 'tempPlayerDash.wav');
     }
 
     create() {
@@ -46,6 +47,55 @@ class Load extends Phaser.Scene {
             frames: [{ frame: 'IdleDown' }],
             frameRate: 10,
             repeat: -1
+        });
+        
+        this.anims.create({
+            key: 'walkLeft',
+            frames: this.anims.generateFrameNames('walkAtlas', {
+                prefix: 'WalkingLeft_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'walkRight',
+            frames: this.anims.generateFrameNames('walkAtlas', {
+                prefix: 'WalkingRight_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'walkUp',
+            frames: this.anims.generateFrameNames('walkAtlas', {
+                prefix: 'WalkingUp_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'walkDown',
+            frames: this.anims.generateFrameNames('walkAtlas', {
+                prefix: 'WalkingDown_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
         });
         
         this.anims.create({
