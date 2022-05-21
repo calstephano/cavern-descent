@@ -23,29 +23,53 @@ class Load extends Phaser.Scene {
         this.anims.create({
             key: 'idleLeft',
             defaultTextureKey: 'idleAtlas',
-            frames: [{ frame: 'IdleLeft' }],
+            frames: this.anims.generateFrameNames('idleAtlas', {
+                prefix: 'IdleLeft_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
             frameRate: 10,
+            yoyo: true,
+            repeatDelay: 3000,
             repeat: -1
         });
         this.anims.create({
             key: 'idleRight',
             defaultTextureKey: 'idleAtlas',
-            frames: [{ frame: 'IdleRight' }],
+            frames: this.anims.generateFrameNames('idleAtlas', {
+                prefix: 'IdleRight_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
             frameRate: 10,
+            yoyo: true,
+            repeatDelay: 3000,
             repeat: -1
         });
         this.anims.create({
             key: 'idleUp',
             defaultTextureKey: 'idleAtlas',
-            frames: [{ frame: 'IdleUp' }],
+            frames: [{ frame: 'IdleBack' }],
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: 'idleDown',
             defaultTextureKey: 'idleAtlas',
-            frames: [{ frame: 'IdleDown' }],
+            frames: this.anims.generateFrameNames('idleAtlas', {
+                prefix: 'IdleDown_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
             frameRate: 10,
+            yoyo: true,
+            repeatDelay: 3000,
             repeat: -1
         });
         

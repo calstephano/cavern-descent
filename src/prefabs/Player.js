@@ -3,7 +3,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this).setOrigin(0.5);
         scene.physics.add.existing(this);
-        this.body.setOffset(0, this.height/2)
+        this.body.setSize(this.width, this.height/2);
+        this.body.setOffset(0, this.height/3)
 
         this.moveSpeed = game.settings.moveSpeed; // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
@@ -81,8 +82,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         if( this.getAxisH() || this.getAxisV() ) {
-            this.hitbox.x = this.x + 30 * this.getAxisH()
-            this.hitbox.y = this.y + 30 * this.getAxisV()
+            this.hitbox.x = this.x + game.settings.hitboxOffset * this.getAxisH()
+            this.hitbox.y = this.y + game.settings.hitboxOffset * this.getAxisV()
         }
         // Update dash bar
         this.dashBar.x = this.x - game.settings.stamina/2;

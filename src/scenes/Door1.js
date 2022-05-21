@@ -14,18 +14,30 @@ class Door1 extends Phaser.Scene {
     }
 
     create() {
-        this.map = this.add.tilemap('door1_map');
-        this.tileset = this.map.addTilesetImage('doorTiles', 'tiles');
-        this.groundLayer = this.map.createLayer('Ground', this.tileset);
-        this.wallsLayer = this.map.createLayer('Walls', this.tileset);
-        this.p1Spawn = this.map.findObject("Objects", obj => obj.name === "playerSpawn");
+        const map = this.add.tilemap('door1_map');
+        const tileset = map.addTilesetImage('doorTiles', 'tiles');
+        const groundLayer = map.createLayer('Ground', tileset);
+        const wallsLayer = map.createLayer('Walls', tileset);
+        let p1Spawn = map.findObject("Objects", obj => obj.name === "playerSpawn");
+
+        wallsLayer.setCollisionByProperty({ 
+            collides: true 
+        });
 
         // set up player
-        this.p1 = new Player(this, this.p1Spawn.x, this.p1Spawn.y, "tempPlayer");
+        this.p1 = new Player(this, p1Spawn.x, p1Spawn.y, "idleAtlas", 'IdleDown_0001');
+        this.physics.add.collider(this.p1, wallsLayer);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+        const debugGraphics = this.add.graphics().setAlpha(0.75);
+        wallsLayer.renderDebug(debugGraphics, {
+            tileColor: null,    // color of non-colliding tiles
+            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),    // color of colliding tiles
+            faceColor: new Phaser.Display.Color(40, 39, 37, 255)                // color of colliding face edges
+        });
     }
 
     update() {
