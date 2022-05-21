@@ -30,7 +30,7 @@ class Level1 extends Phaser.Scene {
         this.EGroups.addEnemyGroups();
 
         // Add player
-        this.playertest = new Player(this, 30, 625, 'test');
+        this.playertest = new Player(this, 30, 625, 'tempPlayer');
         
         this.physics.add.collider(this.playertest, this.walls)
         this.gameOver = false

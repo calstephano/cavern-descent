@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="3">
+ <editorsettings>
+  <export target="doors1.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="doorTiles" tilewidth="64" tileheight="64" spacing="2" tilecount="90" columns="9">
   <image source="doorTiles.png" width="592" height="658"/>
   <tile id="0">
@@ -220,7 +223,7 @@
   </tile>
   <tile id="36">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
     <property name="enter" type="bool" value="false"/>
    </properties>
   </tile>
@@ -329,7 +332,7 @@
   <tile id="54">
    <properties>
     <property name="collides" type="bool" value="false"/>
-    <property name="enter" type="bool" value="false"/>
+    <property name="enter" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="55">
@@ -567,9 +570,9 @@
 81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,
 82,2,30,39,41,30,39,41,30,39,41,30,39,41,30,39,41,30,39,41,30,39,62,80,81,
 83,11,4,40,46,6,42,57,7,40,43,65,69,26,7,40,43,65,69,26,7,4,71,9,81,
-84,19,13,5,48,0,0,58,16,5,52,66,70,35,16,5,52,66,70,35,16,13,73,45,81,
-85,20,22,14,47,0,0,59,25,14,61,67,8,44,25,14,61,67,8,44,25,22,74,27,81,
-86,3,31,23,48,0,0,60,34,23,64,68,17,53,34,23,64,68,17,53,34,31,75,36,81,
+84,19,13,5,47,0,0,58,16,5,52,66,70,35,16,5,52,66,70,35,16,13,73,45,81,
+85,20,22,14,48,0,0,59,25,14,61,67,8,44,25,14,61,67,8,44,25,22,74,27,81,
+86,3,31,23,49,0,0,60,34,23,64,68,17,53,34,23,64,68,17,53,34,31,75,36,81,
 87,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,45,81,
 88,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77,54,81,
 1,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,78,9,81,

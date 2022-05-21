@@ -22,7 +22,7 @@ class Title extends Phaser.Scene {
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keySPACE.on('down', () => {
-            this.scene.start("level1Scene")
+            this.scene.start("door1Scene")
         })
     }
 

@@ -32,62 +32,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        // Attack event handling
-        scene.physics.add.overlap(this.hitbox, scene.EGroups.BEGroup, this.checkHitbox, null, this);
-        scene.physics.add.overlap(this.hitbox, scene.EGroups.REGroup, this.checkHitbox, null, this);
-        scene.physics.add.overlap(this.hitbox, scene.EGroups.bulletGroup, this.checkHitbox, null, this);
-        scene.physics.add.collider(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
-        scene.physics.add.collider(this, scene.EGroups.REGroup, this.enemyCollide, null, this);
-        scene.physics.add.collider(this, scene.EGroups.bulletGroup, this.bulletCollide, null, this);
-
-        // Dash attack
-        this.keySHIFT.on('down', (key, event) => {
-            console.log('Shift pressed!');
-            // Use movementLock when there is an animation or more conditions to stop the dash
-            if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
-                this.dashBar.width = 0;
-                this.movementLock = true;
-                this.setVelocity(this.getAxisH() * this.moveSpeed * 3, this.getAxisV() * this.moveSpeed * 3)
-                if(this.weaponUse) { // If false, the dash is just mobility
-                    console.log(this.direction);
-                    this.weaponActive = true;
-                    if (this.direction == 'left') {
-                        this.play('dashAttackLeft')
-                    } else if (this.direction == 'right') {
-                        this.play('dashAttackRight')
-                    } else if (this.direction == 'up') {
-                        this.play('dashAttackUp')
-                    } else {
-                        this.play('dashAttackDown')
-                    }
-                    this.dashSFX.play();
-                    // Kill enemies that got hit by dash
-                }
-            }
-        })
-
-        // Normal atttack
-        this.keySPACE.on('down', (key, event) => {
-            console.log('Space pressed!');
-            if(this.weaponUse) {
-                this.movementLock = true;
-                this.setVelocity(0);
-                this.weaponActive = true;
-                this.attackSFX.play();
-                if (this.direction == 'left') {
-                    this.play('attackLeft')
-                } else if (this.direction == 'right') {
-                    this.play('attackRight')
-                } else if (this.direction == 'up') {
-                    this.play('attackUp')
-                } else {
-                    this.play('attackDown')
-                }
-                scene.EGroups.BEGroup.getChildren().forEach(enemy => {})
-                //this.checkHitbox(within);
-            }
-        });
-
         // Debug Key
         let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
 
@@ -250,5 +194,63 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keySHIFT.enabled = false;
         this.keySPACE.enabled = false;
         this.destroy();
+    }
+
+    setupEnemies() {
+        // Attack event handling
+        scene.physics.add.overlap(this.hitbox, scene.EGroups.BEGroup, this.checkHitbox, null, this);
+        scene.physics.add.overlap(this.hitbox, scene.EGroups.REGroup, this.checkHitbox, null, this);
+        scene.physics.add.overlap(this.hitbox, scene.EGroups.bulletGroup, this.checkHitbox, null, this);
+        scene.physics.add.collider(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
+        scene.physics.add.collider(this, scene.EGroups.REGroup, this.enemyCollide, null, this);
+        scene.physics.add.collider(this, scene.EGroups.bulletGroup, this.bulletCollide, null, this);
+
+        // Dash attack
+        this.keySHIFT.on('down', (key, event) => {
+            console.log('Shift pressed!');
+            // Use movementLock when there is an animation or more conditions to stop the dash
+            if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
+                this.dashBar.width = 0;
+                this.movementLock = true;
+                this.setVelocity(this.getAxisH() * this.moveSpeed * 3, this.getAxisV() * this.moveSpeed * 3)
+                if(this.weaponUse) { // If false, the dash is just mobility
+                    console.log(this.direction);
+                    this.weaponActive = true;
+                    if (this.direction == 'left') {
+                        this.play('dashAttackLeft')
+                    } else if (this.direction == 'right') {
+                        this.play('dashAttackRight')
+                    } else if (this.direction == 'up') {
+                        this.play('dashAttackUp')
+                    } else {
+                        this.play('dashAttackDown')
+                    }
+                    this.dashSFX.play();
+                    // Kill enemies that got hit by dash
+                }
+            }
+        })
+
+        // Normal atttack
+        this.keySPACE.on('down', (key, event) => {
+            console.log('Space pressed!');
+            if(this.weaponUse) {
+                this.movementLock = true;
+                this.setVelocity(0);
+                this.weaponActive = true;
+                this.attackSFX.play();
+                if (this.direction == 'left') {
+                    this.play('attackLeft')
+                } else if (this.direction == 'right') {
+                    this.play('attackRight')
+                } else if (this.direction == 'up') {
+                    this.play('attackUp')
+                } else {
+                    this.play('attackDown')
+                }
+                scene.EGroups.BEGroup.getChildren().forEach(enemy => {})
+                //this.checkHitbox(within);
+            }
+        });
     }
 }
