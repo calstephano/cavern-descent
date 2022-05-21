@@ -56,8 +56,13 @@ class Level1 extends Phaser.Scene {
 
         this.demoText = this.add.text(400, 225, "Map is just an image. No wall collision yet\nWASD, Space, Shift").setScrollFactor(0);
 
-        this.darkness = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setOrigin(0.5);
-        this.darkness.setScale(5);
+        this.darkness = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(5);
+        this.darkness2 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(4.5);
+        this.darkness3 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(4);
+        this.darkness4 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(3.5);
+        this.darkness2.setAlpha(0.5);
+        this.darkness3.setAlpha(0.5);
+        this.darkness4.setAlpha(0.5);
     }
 
     update() {
@@ -65,6 +70,12 @@ class Level1 extends Phaser.Scene {
             this.playertest.update();
             this.darkness.x = this.playertest.x;
             this.darkness.y = this.playertest.y;
+            this.darkness2.x = this.playertest.x;
+            this.darkness2.y = this.playertest.y;
+            this.darkness3.x = this.playertest.x;
+            this.darkness3.y = this.playertest.y;
+            this.darkness4.x = this.playertest.x;
+            this.darkness4.y = this.playertest.y;
         }
         if(this.playertest.health == 0 && !this.gameOver) {
             this.gameOver = true;
