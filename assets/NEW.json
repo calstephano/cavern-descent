@@ -2,18 +2,18 @@
     "frames": {
         "WideAttackDown_0004": {
             "frame": {
-                "x": 238,
-                "y": 2,
-                "w": 53,
-                "h": 66
+                "x": 952,
+                "y": 8,
+                "w": 212,
+                "h": 264
             },
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {
                 "x": 0,
                 "y": 0,
-                "w": 53,
-                "h": 66
+                "w": 212,
+                "h": 264
             },
             "sourceSize": {
                 "w": 53,

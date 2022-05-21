@@ -22,7 +22,7 @@ class Level1 extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.map = this.add.image(0, 0, 'protomap').setOrigin(0);
-        this.map.setScale(2);
+        this.map.setScale(3);
         this.map.setAlpha(0.5);
 
         // Add enemy groups
@@ -51,15 +51,14 @@ class Level1 extends Phaser.Scene {
 
         // Camera Test
         this.cameras.main.setBounds(0, 0, this.map.width * this.map.scale, this.map.height * this.map.scale);
-        this.cameras.main.setZoom(2);
         this.cameras.main.startFollow(this.playertest, true, 0.1, 0.1);
 
         this.demoText = this.add.text(400, 225, "Map is just an image. No wall collision yet\nWASD, Space, Shift").setScrollFactor(0);
 
-        this.darkness = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(5);
-        this.darkness2 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(4.5);
-        this.darkness3 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(4);
-        this.darkness4 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(3.5);
+        this.darkness = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(10);
+        this.darkness2 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(8.5);
+        this.darkness3 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(7);
+        this.darkness4 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(5.5);
         this.darkness2.setAlpha(0.5);
         this.darkness3.setAlpha(0.5);
         this.darkness4.setAlpha(0.5);
