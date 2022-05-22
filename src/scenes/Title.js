@@ -11,7 +11,7 @@ class Title extends Phaser.Scene {
         this.add.text(game.config.width/2,game.config.height/2, 'TITLE SCREEN (Name pending)\nPress SPACE to start');
 
         game.settings = {
-            moveSpeed: 200,
+            moveSpeed: 400,
             stamina: 40,
             sBarOffset: 90,
             hBarOffset: 100,

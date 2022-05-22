@@ -6,6 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(this.width, this.height/2);
         this.body.setOffset(0, this.height/3)
 
+        this.scene = scene;
         this.moveSpeed = game.settings.moveSpeed; // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
 
@@ -13,7 +14,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.maxHealth = game.settings.health;
         this.movementLock = false;
 
-        this.weaponUse = true;
+        this.weaponUse = false;
 
         // Create hitbox for sword
         this.hitbox = scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize).setStrokeStyle(1, 0xFFFF00);
@@ -196,14 +197,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.destroy();
     }
 
-    setupEnemies() {
+    setupCombat(weaponEnabled) {
+        this.weaponUse = weaponEnabled;
+
         // Attack event handling
-        scene.physics.add.overlap(this.hitbox, scene.EGroups.BEGroup, this.checkHitbox, null, this);
-        scene.physics.add.overlap(this.hitbox, scene.EGroups.REGroup, this.checkHitbox, null, this);
-        scene.physics.add.overlap(this.hitbox, scene.EGroups.bulletGroup, this.checkHitbox, null, this);
-        scene.physics.add.collider(this, scene.EGroups.BEGroup, this.enemyCollide, null, this);
-        scene.physics.add.collider(this, scene.EGroups.REGroup, this.enemyCollide, null, this);
-        scene.physics.add.collider(this, scene.EGroups.bulletGroup, this.bulletCollide, null, this);
+        this.scene.physics.add.overlap(this.hitbox, this.scene.EGroups.BEGroup, this.checkHitbox, null, this);
+        this.scene.physics.add.overlap(this.hitbox, this.scene.EGroups.REGroup, this.checkHitbox, null, this);
+        this.scene.physics.add.overlap(this.hitbox, this.scene.EGroups.bulletGroup, this.checkHitbox, null, this);
+        this.scene.physics.add.collider(this, this.scene.EGroups.BEGroup, this.enemyCollide, null, this);
+        this.scene.physics.add.collider(this, this.scene.EGroups.REGroup, this.enemyCollide, null, this);
+        this.scene.physics.add.collider(this, this.scene.EGroups.bulletGroup, this.bulletCollide, null, this);
 
         // Dash attack
         this.keySHIFT.on('down', (key, event) => {
@@ -248,7 +251,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 } else {
                     this.play('attackDown')
                 }
-                scene.EGroups.BEGroup.getChildren().forEach(enemy => {})
+                this.scene.EGroups.BEGroup.getChildren().forEach(enemy => {})
                 //this.checkHitbox(within);
             }
         });
