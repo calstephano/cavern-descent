@@ -7,13 +7,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setOffset(0, this.height/3)
 
         this.scene = scene;
-        this.moveSpeed = game.settings.moveSpeed; // Assign move speed
+        this.setMaxVelocity(game.settings.moveSpeed);
+        this.speed = game.settings.moveSpeed*3;   // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
 
         this.health = game.settings.health;
         this.maxHealth = game.settings.health;
         this.movementLock = false;
-
+        this.onIce = false;
         this.weaponUse = false;
 
         // Create hitbox for sword
@@ -47,7 +48,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update() {
 
         if(!this.movementLock) {
-            this.setVelocity(this.getAxisH() * this.moveSpeed, this.getAxisV() * this.moveSpeed)
+            if (this.onIce){
+                this.setAcceleration(this.getAxisH() * this.speed, this.getAxisV() * this.speed);
+            } else {
+                this.setVelocity(this.getAxisH() * this.speed, this.getAxisV() * this.speed)
+            }
+            
             this.getDirection();
             // Determine direction and play anims based on that
             if( this.getAxisH() || this.getAxisV() ) {
@@ -65,6 +71,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                     this.play('walkDown', true);
                 }
             } else {
+                // Stop the player if not on ice
+                //this.setVelocity(0);
                 if (this.direction == 'left') {
                     // Play left idle anim
                     this.play('idleLeft', true);
