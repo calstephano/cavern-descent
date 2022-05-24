@@ -546,7 +546,7 @@
    </properties>
   </tile>
  </tileset>
- <layer id="1" name="Ground" width="25" height="15" visible="0" offsetx="32" offsety="0">
+ <layer id="1" name="Ground" width="25" height="15" offsetx="32" offsety="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -565,7 +565,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="4" name="Entrance" width="25" height="15" visible="0" offsetx="32" offsety="0">
+ <layer id="4" name="Entrance" width="25" height="15" offsetx="32" offsety="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
