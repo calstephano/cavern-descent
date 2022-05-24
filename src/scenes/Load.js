@@ -6,7 +6,6 @@ class Load extends Phaser.Scene {
     preload() {
         // Load things that should be present for nearly every scene (i.e. The player)
         this.load.path = './assets/';
-        this.load.image('tempPlayer', 'TempPlayer.png');
         this.load.atlas('dashAttackAtlas', 'TempDashAttacks.png', 'DashAttackTemp.json');
         this.load.atlas('idleAtlas', 'playerIdle.png', 'playerIdle.json');
         this.load.atlas('walkAtlas', 'playerWalk.png', 'playerWalk.json');
