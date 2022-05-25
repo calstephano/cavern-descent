@@ -1,5 +1,5 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame) {
+    constructor(scene, x, y, texture, frame, onIce) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this).setOrigin(0.5);
         scene.physics.add.existing(this);
@@ -10,26 +10,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.setMaxVelocity(game.settings.moveSpeed);
         this.speed = game.settings.moveSpeed*3;   // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
-
+        this.combatEnabled = false;
         this.health = game.settings.health;
         this.maxHealth = game.settings.health;
         this.movementLock = false;
-        this.onIce = false;
+        this.onIce = onIce;
         this.weaponUse = false;
+        this.lastAxisH = 0;
+        this.lastAxisV = 0;
 
-        // Create hitbox for sword
-        this.hitbox = scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize).setStrokeStyle(1, 0xFFFF00);
-        this.hitbox = scene.physics.add.existing(this.hitbox, 0)
         
         // Sound Effects
         this.attackSFX = scene.sound.add('attack');
         this.hurtSFX = scene.sound.add('hurt');
         this.dashSFX = scene.sound.add('dash');
 
-        // Add dash cooldown visualized by bar
-        this.dashBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.sBarOffset, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);
-        // Visualize heath via bar (probably temporary)
-        this.healthBar = scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.hBarOffset, game.settings.stamina, 3, 0xFF0000).setOrigin(0,0.5);
+        
         // Bind keys
         this.keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -55,6 +51,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
             
             this.getDirection();
+            this.getLastDirection();
             // Determine direction and play anims based on that
             if( this.getAxisH() || this.getAxisV() ) {
                 if (this.direction == 'left') {
@@ -90,24 +87,37 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
         }
 
-        if( this.getAxisH() || this.getAxisV() ) {
-            this.hitbox.x = this.x + game.settings.hitboxOffset * this.getAxisH()
-            this.hitbox.y = this.y + game.settings.hitboxOffset * this.getAxisV()
-        }
-        // Update dash bar
-        this.dashBar.x = this.x - game.settings.stamina/2;
-        this.dashBar.y = this.y - game.settings.sBarOffset;
-        this.healthBar.x = this.x - game.settings.stamina/2;
-        this.healthBar.y = this.y - game.settings.hBarOffset;
-        if(this.dashBar.width < game.settings.stamina) {
-            this.dashBar.width += game.settings.staminaRegen;
-        }
+        
+        // Update dash bar and hitbox position
+        if(this.combatEnabled){
+            this.dashBar.x = this.x - game.settings.stamina/2;
+            this.dashBar.y = this.y - game.settings.sBarOffset;
+            this.healthBar.x = this.x - game.settings.stamina/2;
+            this.healthBar.y = this.y - game.settings.hBarOffset;
+            if(this.dashBar.width < game.settings.stamina) {
+                this.dashBar.width += game.settings.staminaRegen;
+            }
 
-        this.on('animationcomplete', () => {
+            if( this.getAxisH() || this.getAxisV() ) {
+                this.hitbox.x = this.x + game.settings.hitboxOffset * this.getAxisH()
+                this.hitbox.y = this.y + game.settings.hitboxOffset * this.getAxisV()
+            } else {
+                this.hitbox.x = this.x + game.settings.hitboxOffset * this.lastAxisH;
+                this.hitbox.y = this.y + game.settings.hitboxOffset * this.lastAxisV;
+            }
+        }
+        this.on('animationcomplete', (anim, frame) => {
             //console.log('Done')
+            
+            if(anim.key == 'dashAttackLeft' || anim.key == 'dashAttackRight' || anim.key == 'dashAttackUp' || anim.key == 'dashAttackDown') {
+                this.setMaxVelocity(game.settings.moveSpeed);
+                this.dash = false;
+                
+            }
             this.movementLock = false;
             this.weaponActive = false;
         })
+        
     }
 
 
@@ -136,11 +146,33 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         return 0;
     }
 
+    // For use in Walking/Idle/Attacks anims
     getDirection(){
         if(this.getAxisV() == 1) this.direction = 'down'
         if(this.getAxisV() == -1) this.direction = 'up'
         if(this.getAxisH() == -1) this.direction = 'left'
         if(this.getAxisH() == 1) this.direction = 'right'
+    }
+
+    // For use in Hitbox positions
+    getLastDirection(){
+        if (!this.getAxisH() && this.getAxisV()) {
+            this.lastAxisH = 0;
+            if(this.getAxisV() == 1) this.lastAxisV = 1;
+            if(this.getAxisV() == -1) this.lastAxisV = -1;
+        }
+        if (this.getAxisH() && !this.getAxisV()) {
+            this.lastAxisV = 0;
+            if(this.getAxisH() == -1) this.lastAxisH = -1;
+            if(this.getAxisH() == 1) this.lastAxisH = 1;
+        }
+        if(this.getAxisH() && this.getAxisV()) {
+            if(this.getAxisV() == 1) this.lastAxisV = 1;
+            if(this.getAxisV() == -1) this.lastAxisV = -1;
+            if(this.getAxisH() == -1) this.lastAxisH = -1;
+            if(this.getAxisH() == 1) this.lastAxisH = 1;
+        }
+        console.log(this.lastAxisH + ', ' + this.lastAxisV)
     }
 
     checkHitbox(hitbox, enemy) {
@@ -206,7 +238,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     setupCombat(weaponEnabled) {
+        this.combatEnabled = true;
         this.weaponUse = weaponEnabled;
+        // Add dash cooldown visualized by bar
+        this.dashBar = this.scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.sBarOffset, game.settings.stamina, 3, 0x00FF00).setOrigin(0, 0.5);
+        // Visualize heath via bar (probably temporary)
+        this.healthBar = this.scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.hBarOffset, game.settings.stamina, 3, 0xFF0000).setOrigin(0,0.5);
+        
+        // Create hitbox for sword
+        this.hitbox = this.scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize).setStrokeStyle(1, 0xFFFF00);
+        this.hitbox = this.scene.physics.add.existing(this.hitbox, 0)
 
         // Attack event handling
         this.scene.physics.add.overlap(this.hitbox, this.scene.EGroups.BEGroup, this.checkHitbox, null, this);
@@ -221,9 +262,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             console.log('Shift pressed!');
             // Use movementLock when there is an animation or more conditions to stop the dash
             if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
+                this.dash = true;
+                this.setMaxVelocity(game.settings.moveSpeed * 3)
                 this.dashBar.width = 0;
                 this.movementLock = true;
-                this.setVelocity(this.getAxisH() * this.moveSpeed * 3, this.getAxisV() * this.moveSpeed * 3)
+                this.setVelocity(this.getAxisH() * this.speed * 3, this.getAxisV() * this.speed * 3)
                 if(this.weaponUse) { // If false, the dash is just mobility
                     console.log(this.direction);
                     this.weaponActive = true;
@@ -245,7 +288,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // Normal atttack
         this.keySPACE.on('down', (key, event) => {
             console.log('Space pressed!');
-            if(this.weaponUse) {
+            if(this.weaponUse && !this.dash) {
                 this.movementLock = true;
                 this.setVelocity(0);
                 this.weaponActive = true;

@@ -30,7 +30,7 @@ class Level1 extends Phaser.Scene {
         this.EGroups.addEnemyGroups();
 
         // Add player
-        this.playertest = new Player(this, 30, 625, "idleAtlas", 'IdleDown_0001');
+        this.playertest = new Player(this, 30, 625, "idleAtlas", 'IdleDown_0001', false);
         this.playertest.setupCombat(true);
         
         this.physics.add.collider(this.playertest, this.walls)

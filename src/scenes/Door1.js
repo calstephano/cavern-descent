@@ -27,7 +27,7 @@ class Door1 extends Phaser.Scene {
         });
 
         // set up player
-        this.p1 = new Player(this, p1Spawn.x, p1Spawn.y, "idleAtlas", 'IdleDown_0001');
+        this.p1 = new Player(this, p1Spawn.x, p1Spawn.y, "idleAtlas", 'IdleDown_0001', false);
         this.physics.add.collider(this.p1, wallsLayer);
 
         // Only call scene change exactly once on entrance
