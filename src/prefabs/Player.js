@@ -107,13 +107,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.dashBar.width += game.settings.staminaRegen;
             }
 
-            if( this.getAxisH() || this.getAxisV() ) {
-                this.hitbox.x = this.x + game.settings.hitboxOffset * this.getAxisH()
-                this.hitbox.y = this.y + game.settings.hitboxOffset * this.getAxisV()
-            } else {
-                this.hitbox.x = this.x + game.settings.hitboxOffset * this.lastAxisH;
-                this.hitbox.y = this.y + game.settings.hitboxOffset * this.lastAxisV;
-            }
+            this.hitbox.x = this.x + game.settings.hitboxOffset * this.lastAxisH;
+            this.hitbox.y = this.y + game.settings.hitboxOffset * this.lastAxisV;
         }
         this.on('animationcomplete', (anim, frame) => {
             //console.log('Done')
