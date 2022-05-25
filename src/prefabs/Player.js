@@ -90,6 +90,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }
             }
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
+        } else if(this.movementLock) {
+            if(!this.onIce) {
+                this.setVelocity(0);
+            }
         }
 
         
@@ -297,7 +301,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             console.log('Space pressed!');
             if(this.weaponUse && !this.dash) {
                 this.movementLock = true;
-                this.setVelocity(0);
                 this.weaponActive = true;
                 this.attackSFX.play();
                 if (this.direction == 'left') {
