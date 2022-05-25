@@ -54,6 +54,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.getLastDirection();
             // Determine direction and play anims based on that
             if( this.getAxisH() || this.getAxisV() ) {
+                if(this.onIce) {
+                    this.setDrag(0);
+                }
                 if (this.direction == 'left') {
                     // Play left walk anim
                     this.play('walkLeft', true);
@@ -69,7 +72,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 }
             } else {
                 // Stop the player if not on ice
-                //this.setVelocity(0);
+                if(this.onIce) {
+                    this.setDrag(250);
+                }
                 if (this.direction == 'left') {
                     // Play left idle anim
                     this.play('idleLeft', true);
@@ -156,23 +161,25 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     // For use in Hitbox positions
     getLastDirection(){
-        if (!this.getAxisH() && this.getAxisV()) {
+        let axisH = this.getAxisH()
+        let axisV = this.getAxisV()
+        if (!axisH && axisV) {
             this.lastAxisH = 0;
-            if(this.getAxisV() == 1) this.lastAxisV = 1;
-            if(this.getAxisV() == -1) this.lastAxisV = -1;
+            if(axisV == 1) this.lastAxisV = 1;
+            if(axisV == -1) this.lastAxisV = -1;
         }
-        if (this.getAxisH() && !this.getAxisV()) {
+        if (axisH && !axisV) {
             this.lastAxisV = 0;
-            if(this.getAxisH() == -1) this.lastAxisH = -1;
-            if(this.getAxisH() == 1) this.lastAxisH = 1;
+            if(axisH == -1) this.lastAxisH = -1;
+            if(axisH == 1) this.lastAxisH = 1;
         }
-        if(this.getAxisH() && this.getAxisV()) {
-            if(this.getAxisV() == 1) this.lastAxisV = 1;
-            if(this.getAxisV() == -1) this.lastAxisV = -1;
-            if(this.getAxisH() == -1) this.lastAxisH = -1;
-            if(this.getAxisH() == 1) this.lastAxisH = 1;
+        if(axisH && axisV) {
+            if(axisV == 1) this.lastAxisV = 1;
+            if(axisV == -1) this.lastAxisV = -1;
+            if(axisH == -1) this.lastAxisH = -1;
+            if(axisH == 1) this.lastAxisH = 1;
         }
-        console.log(this.lastAxisH + ', ' + this.lastAxisV)
+        //console.log(this.lastAxisH + ', ' + this.lastAxisV)
     }
 
     checkHitbox(hitbox, enemy) {
