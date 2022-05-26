@@ -6,10 +6,11 @@ class Load extends Phaser.Scene {
     preload() {
         // Load things that should be present for nearly every scene (i.e. The player)
         this.load.path = './assets/';
-        this.load.atlas('dashAttackAtlas', 'TempDashAttacks.png', 'DashAttackTemp.json');
+        this.load.atlas('dashAttackAtlas', 'DashAttack.png', 'DashAttack.json');
         this.load.atlas('idleAtlas', 'playerIdle.png', 'playerIdle.json');
         this.load.atlas('walkAtlas', 'playerWalk.png', 'playerWalk.json');
-        this.load.atlas('attackAtlas', 'NEW.png', 'NEW.json');
+        this.load.atlas('armedWalkAtlas', 'armedWalk.png', 'armedWalk.json');
+        this.load.atlas('attackAtlas', 'WideAttack.png', 'WideAttack.json');
         this.load.audio('attack', 'tempPlayerAttack.wav');
         this.load.audio('hurt', 'tempPlayerHurt.wav');
         this.load.audio('dash', 'tempPlayerDash.wav');
@@ -17,9 +18,7 @@ class Load extends Phaser.Scene {
     }
 
     create() {
-        // Add player animations here
-        // this.anims.create({ ... });
-
+        // Idle anims
         this.anims.create({
             key: 'idleLeft',
             defaultTextureKey: 'idleAtlas',
@@ -73,6 +72,7 @@ class Load extends Phaser.Scene {
             repeat: -1
         });
         
+        // Walking anims
         this.anims.create({
             key: 'walkLeft',
             frames: this.anims.generateFrameNames('walkAtlas', {
@@ -122,6 +122,57 @@ class Load extends Phaser.Scene {
             repeat: 0
         });
         
+        // Armed walk anims
+        this.anims.create({
+            key: 'AWalkLeft',
+            frames: this.anims.generateFrameNames('armedWalkAtlas', {
+                prefix: 'WalkingSwordLeft_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'AWalkRight',
+            frames: this.anims.generateFrameNames('armedWalkAtlas', {
+                prefix: 'WalkingSwordRight_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'AWalkUp',
+            frames: this.anims.generateFrameNames('armedWalkAtlas', {
+                prefix: 'WalkingSwordUp_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'AWalkDown',
+            frames: this.anims.generateFrameNames('armedWalkAtlas', {
+                prefix: 'WalkingSwordDown_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 24,
+            repeat: 0
+        });
+
+
         this.anims.create({
             key: 'attackLeft',
             frames: this.anims.generateFrameNames('attackAtlas', {

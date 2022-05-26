@@ -57,18 +57,34 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 if(this.onIce) {
                     this.setDrag(0);
                 }
-                if (this.direction == 'left') {
-                    // Play left walk anim
-                    this.play('walkLeft', true);
-                } else if (this.direction == 'right') {
-                    // Play right walk anim
-                    this.play('walkRight', true);
-                } else if (this.direction == 'up') {
-                    // Play up walk anim
-                    this.play('walkUp', true);
+                if(this.weaponUse){
+                    if (this.direction == 'left') {
+                        // Play left walk anim
+                        this.play('AWalkLeft', true);
+                    } else if (this.direction == 'right') {
+                        // Play right walk anim
+                        this.play('AWalkRight', true);
+                    } else if (this.direction == 'up') {
+                        // Play up walk anim
+                        this.play('AWalkUp', true);
+                    } else {
+                        // Play down walk anim
+                        this.play('AWalkDown', true);
+                    }
                 } else {
-                    // Play down walk anim
-                    this.play('walkDown', true);
+                    if (this.direction == 'left') {
+                        // Play left walk anim
+                        this.play('walkLeft', true);
+                    } else if (this.direction == 'right') {
+                        // Play right walk anim
+                        this.play('walkRight', true);
+                    } else if (this.direction == 'up') {
+                        // Play up walk anim
+                        this.play('walkUp', true);
+                    } else {
+                        // Play down walk anim
+                        this.play('walkDown', true);
+                    }
                 }
             } else {
                 // Stop the player if not on ice
@@ -91,7 +107,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
         } else if(this.movementLock) {
-            if(!this.onIce) {
+            if(!this.onIce && !this.dash) {
                 this.setVelocity(0);
             }
         }
