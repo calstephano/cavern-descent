@@ -10,7 +10,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.scene = scene;
         this.setMaxVelocity(game.settings.moveSpeed);
-        this.speed = game.settings.moveSpeed*3;   // Assign move speed
+        this.speed = game.settings.moveSpeed;   // Assign move speed
         this.direction = 'down';                  // Store the direction after walking
         this.combatEnabled = false;
         this.health = game.settings.health;
@@ -286,7 +286,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // Use movementLock when there is an animation or more conditions to stop the dash
             if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
                 this.dash = true;
-                this.setMaxVelocity(game.settings.moveSpeed * 1.5)
+                this.setMaxVelocity(game.settings.moveSpeed * 2.25)
                 this.dashBar.width = 0;
                 this.movementLock = true;
                 this.setVelocity(this.getAxisH() * this.speed * 3, this.getAxisV() * this.speed * 3)

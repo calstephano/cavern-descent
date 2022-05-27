@@ -3,7 +3,7 @@ let config = {
     width: 1600,
     height: 900,
     autoCenter: true,
-    scene: [ Load, Title, Door1, Level1, Door2, Level2],
+    scene: [ Load, Title, Door1, Level1, Door2, Level2, Door3],
     physics: {
         default: "arcade",
         arcade: {

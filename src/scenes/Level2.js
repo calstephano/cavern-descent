@@ -41,6 +41,7 @@ class Level2 extends Phaser.Scene {
         let RangedEnemyObjects = map.filterObjects("Objects", obj => obj.name === "rangedEnemy");
 
         // set up player
+        this.gameOver = false;
         this.p1 = new Player(this, p1Spawn.x, p1Spawn.y, "idleAtlas", 'IdleDown_0001', true);
         this.p1.setupCombat(true);
 
@@ -60,9 +61,18 @@ class Level2 extends Phaser.Scene {
             this.EGroups.addBasicEnemy(element.x, element.y, this.p1, 400, 200);
         })
         RangedEnemyObjects.map((element) => {
-            this.EGroups.addRangedEnemy(element.x, element.y, this.p1, 600, 200);
+            this.EGroups.addRangedEnemy(element.x, element.y, this.p1, 500, 200);
         })
-        
+        this.physics.add.collider(this.EGroups.BEGroup, BottomWallsLayer)
+        this.physics.add.collider(this.EGroups.BEGroup, TopWallsLayer)
+        this.physics.add.collider(this.EGroups.REGroup, BottomWallsLayer)
+        this.physics.add.collider(this.EGroups.REGroup, TopWallsLayer)
+        this.physics.add.collider(this.EGroups.bulletGroup, BottomWallsLayer, (bullet, wall) => {
+            bullet.kill();
+        });
+        this.physics.add.collider(this.EGroups.bulletGroup, TopWallsLayer, (bullet, wall) => {
+            bullet.kill();
+        });
         //this.cameras.main.setBounds(0, 0, map.width, map.height);
         this.cameras.main.startFollow(this.p1, true, 0.1, 0.1);
 
@@ -81,6 +91,7 @@ class Level2 extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         // Test that the walls actualy have collision
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -94,28 +105,15 @@ class Level2 extends Phaser.Scene {
     update() {
         if(!this.gameOver) {
             this.p1.update();
-            // this.darkness.x = this.playertest.x;
-            // this.darkness.y = this.playertest.y;
-            // this.darkness2.x = this.playertest.x;
-            // this.darkness2.y = this.playertest.y;
-            // this.darkness3.x = this.playertest.x;
-            // this.darkness3.y = this.playertest.y;
-            // this.darkness4.x = this.playertest.x;
-            // this.darkness4.y = this.playertest.y;
         }
         if(this.p1.health == 0 && !this.gameOver) {
             this.gameOver = true;
             this.p1.kill();
-            this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to return').setScrollFactor(0);
-        }
-        if(this.EGroups.noneAlive() && !this.gameOver) {
-            this.gameOver = true;
-            this.p1.kill();
-            this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU WIN\nPress R to return').setScrollFactor(0);
+            this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to retry').setScrollFactor(0);
         }
         if(this.gameOver){
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
-                this.scene.start('titleScene');
+                this.scene.start('door2Scene');
             }
         }
     }

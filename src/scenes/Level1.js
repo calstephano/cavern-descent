@@ -39,12 +39,12 @@ class Level1 extends Phaser.Scene {
         // Add enemy
         // Enemies are currently loaded in through coordinates, will use tilemap to load these in later
         this.EGroups.addBasicEnemy(500, 500, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(520, 700, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(1200, 700, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(1000, 800, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(1000, 1100, this.playertest, 200, 100);
-        this.EGroups.addRangedEnemy(1000, 300, 'enemy2', 0, this.playertest, 300, 150)
-        this.EGroups.addRangedEnemy(1000, 1200, 'enemy2', 0, this.playertest, 300, 150)
+        // this.EGroups.addBasicEnemy(520, 700, this.playertest, 200, 100);
+        // this.EGroups.addBasicEnemy(1200, 700, this.playertest, 200, 100);
+        // this.EGroups.addBasicEnemy(1000, 800, this.playertest, 200, 100);
+        // this.EGroups.addBasicEnemy(1000, 1100, this.playertest, 200, 100);
+        // this.EGroups.addRangedEnemy(1000, 300, 'enemy2', 0, this.playertest, 300, 150)
+        // this.EGroups.addRangedEnemy(1000, 1200, 'enemy2', 0, this.playertest, 300, 150)
 
         // Add world bounds to physics
         this.physics.world.setBounds(0,0, this.map.width * this.map.scale, this.map.height* this.map.scale);
