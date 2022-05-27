@@ -1,6 +1,8 @@
 class EnemyGroups {
-    constructor(scene, bulletTexture) {
+    constructor(scene, basicEnemyTexture, rangedEnemyTexture, bulletTexture) {
         this.scene = scene;
+        this.basicEnemyTexture = basicEnemyTexture;
+        this.rangedEnemyTexture = rangedEnemyTexture;
         this.bulletTexture = bulletTexture;
     }
 
@@ -26,13 +28,13 @@ class EnemyGroups {
         this.addRangedEnemyGroup();
     }
 
-    addBasicEnemy(x, y, texture, frame, target, range, speed){
-        let be = new BasicEnemy(this.scene, x, y, texture, frame, target, range, speed);
+    addBasicEnemy(x, y, target, range, speed){
+        let be = new BasicEnemy(this.scene, x, y, this.basicEnemyTexture, 0, target, range, speed);
         this.BEGroup.add(be);
     }
 
-    addRangedEnemy(x, y, texture, frame, target, range, speed){
-        let re = new RangedEnemy(this.scene, x, y, texture, frame, target, range, speed);
+    addRangedEnemy(x, y, target, range, speed){
+        let re = new RangedEnemy(this.scene, x, y, this.rangedEnemyTexture, 0, target, range, speed);
         this.REGroup.add(re);
     }
 

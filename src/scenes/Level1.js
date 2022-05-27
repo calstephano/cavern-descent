@@ -26,7 +26,7 @@ class Level1 extends Phaser.Scene {
         this.map.setAlpha(0.5);
 
         // Add enemy groups
-        this.EGroups = new EnemyGroups(this, 'bullet');
+        this.EGroups = new EnemyGroups(this,'enemy1', 'enemy2', 'bullet');
         this.EGroups.addEnemyGroups();
 
         // Add player
@@ -38,11 +38,11 @@ class Level1 extends Phaser.Scene {
 
         // Add enemy
         // Enemies are currently loaded in through coordinates, will use tilemap to load these in later
-        this.EGroups.addBasicEnemy(500, 500, 'enemy1', 0, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(520, 700, 'enemy1', 0, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(1200, 700, 'enemy1', 0, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(1000, 800, 'enemy1', 0, this.playertest, 200, 100);
-        this.EGroups.addBasicEnemy(1000, 1100, 'enemy1', 0, this.playertest, 200, 100);
+        this.EGroups.addBasicEnemy(500, 500, this.playertest, 200, 100);
+        this.EGroups.addBasicEnemy(520, 700, this.playertest, 200, 100);
+        this.EGroups.addBasicEnemy(1200, 700, this.playertest, 200, 100);
+        this.EGroups.addBasicEnemy(1000, 800, this.playertest, 200, 100);
+        this.EGroups.addBasicEnemy(1000, 1100, this.playertest, 200, 100);
         this.EGroups.addRangedEnemy(1000, 300, 'enemy2', 0, this.playertest, 300, 150)
         this.EGroups.addRangedEnemy(1000, 1200, 'enemy2', 0, this.playertest, 300, 150)
 
@@ -84,8 +84,7 @@ class Level1 extends Phaser.Scene {
         }
         if(this.EGroups.noneAlive() && !this.gameOver) {
             this.gameOver = true;
-            this.playertest.kill();
-            this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU WIN\nPress R to return').setScrollFactor(0);
+            this.scene.start('door2Scene')
         }
         if(this.gameOver){
             if (Phaser.Input.Keyboard.JustDown(keyR)) {
