@@ -1,5 +1,5 @@
 class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame, target, range, speed) {
+    constructor(scene, x, y, texture, frame, target, range, speed, name) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this).setOrigin(0.5);
         scene.physics.add.existing(this);
@@ -7,7 +7,7 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
         this.target = target;   // Generally, the player will be the target
         this.detectRange = range;     // Range set to prevent enemy from detecting player on the other side of map
         this.moveSpeed = speed;
-
+        this.name = name;
         this.playerDetected = false;    // Enemies start with no vision of player
 
         // Create anims

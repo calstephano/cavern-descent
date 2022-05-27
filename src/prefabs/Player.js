@@ -269,7 +269,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.healthBar = this.scene.add.rectangle(this.x - game.settings.stamina/2, this.y - game.settings.hBarOffset, game.settings.stamina, 3, 0xFF0000).setOrigin(0,0.5);
         
         // Create hitbox for sword
-        this.hitbox = this.scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize).setStrokeStyle(1, 0xFFFF00);
+        this.hitbox = this.scene.add.rectangle(0, 0, game.settings.attackSize, game.settings.attackSize);
         this.hitbox = this.scene.physics.add.existing(this.hitbox, 0)
 
         // Attack event handling

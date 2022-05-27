@@ -6,7 +6,7 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
         this.name = name;
         this.target = target;           // Generally, the player will be the target
         this.detectRange = range;       // Range set to prevent enemy from detecting player on the other side of map
-        
+        this.name = name;
         this.moveSpeed = speed;
 
         this.playerDetected = false;    // Enemies start with no vision of player

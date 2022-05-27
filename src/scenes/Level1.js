@@ -5,10 +5,10 @@ class Level1 extends Phaser.Scene {
 
     preload() {
         // Add enemy images/atlases here
-        this.load.image('enemy1', './assets/tempEnemy1.png');
-        this.load.image('enemy2', './assets/tempEnemy2.png');
-        this.load.image('bullet', './assets/Square.png');
-        this.load.image('darkness', './assets/darkness.png')
+        this.load.atlas('be1_atlas', './assets/imp.png', './assets/imp.json');
+        this.load.atlas('re1_atlas', './assets/fireCobra.png', './assets/fireCobra.json');
+        this.load.image('bullet', './assets/fireball.png');
+        //this.load.image('darkness', './assets/darkness.png')
 
         // Tilemap
         this.load.tilemapTiledJSON('level1_map', './assets/level1.json');
@@ -30,8 +30,11 @@ class Level1 extends Phaser.Scene {
 
 
         // Add enemy groups
-        this.EGroups = new EnemyGroups(this, 'enemy1', 'enemy2', 'bullet');
+        let beName = 'imp';
+        let reName = 'fCobra';
+        this.EGroups = new EnemyGroups(this, 'be1_atlas', 're1_atlas', 'bullet');
         this.EGroups.addEnemyGroups();
+        this.createEnemyAnims(beName, reName);
 
         // get basic enemy object array from tilemap Objects layer
         let BasicEnemyObjects = map.filterObjects("Objects", obj => obj.name === "basicEnemy");
@@ -183,4 +186,105 @@ class Level1 extends Phaser.Scene {
         if(tile.index == -1) return false;
         return true;
     }
+
+    createEnemyAnims(beName, reName) {
+        this.anims.create({
+            key: beName + 'WalkUp',
+            defaultTextureKey: 'be1_atlas',
+            frames: [{ frame: 'WalkUp_0001' }],
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: beName + 'WalkDown',
+
+            frames: this.anims.generateFrameNames('be1_atlas', {
+                prefix: 'WalkDown_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+        this.anims.create({
+            key: beName + 'WalkLeft',
+
+            frames: this.anims.generateFrameNames('be1_atlas', {
+                prefix: 'WalkLeft_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+        this.anims.create({
+            key: beName + 'WalkRight',
+
+            frames: this.anims.generateFrameNames('be1_atlas', {
+                prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: reName + 'WalkUp',
+            defaultTextureKey: 're1_atlas',
+            frames: [{ frame: 'WalkUp_0001' }],
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: reName + 'WalkDown',
+
+            frames: this.anims.generateFrameNames('re1_atlas', {
+                prefix: 'WalkDown_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: reName + 'WalkLeft',
+
+            frames: this.anims.generateFrameNames('re1_atlas', {
+                prefix: 'WalkLeft_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: reName + 'WalkRight',
+
+            frames: this.anims.generateFrameNames('re1_atlas', {
+                prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+    }
+
+    
+
 }
