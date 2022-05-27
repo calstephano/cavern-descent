@@ -1,9 +1,9 @@
 class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame, target, range, speed) {
+    constructor(scene, x, y, texture, frame, target, range, speed, name) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this).setOrigin(0.5);
         scene.physics.add.existing(this);
-
+        this.name = name;
         this.target = target;           // Generally, the player will be the target
         this.detectRange = range;       // Range set to prevent enemy from detecting player on the other side of map
         
@@ -18,8 +18,6 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
 
         this.attackDelay = 2000;
         this.attackCountdown = 2000;
-
-        // Create anims
     }
 
     update(time, delta) {
@@ -52,15 +50,23 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
     approach() {
         if(this.x < this.target.x - 5) {
             this.setVelocityX(this.moveSpeed);
+            // Play walk right anim
+            // this.play(this.name + 'WalkRight')
         } else if (this.x > this.target.x + 5) {
             this.setVelocityX(-this.moveSpeed);
+            // Play walk left anim
+            // this.play(this.name + 'WalkLeft')
         } else {
             this.setVelocityX(0);
         }
 
         if(this.y < this.target.y) {
+            // Play walk down anim
+            // this.play(this.name + 'WalkDown')
             this.setVelocityY(this.moveSpeed);
         } else if (this.y > this.target.y) {
+            // Play walk up anim
+            // this.play(this.name + 'WalkUp')
             this.setVelocityY(-this.moveSpeed);
         } else {
             this.setVelocityY(0);
@@ -69,16 +75,24 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
 
     flee() {
         if(this.x < this.target.x - 5) {
+            // Play walk left anim
+            // this.play(this.name + 'WalkLeft')
             this.setVelocityX(-this.moveSpeed/2);
         } else if (this.x > this.target.x + 5) {
+            // Play walk right anim
+            // this.play(this.name + 'WalkRight')
             this.setVelocityX(this.moveSpeed/2);
         } else {
             this.setVelocityX(0);
         }
 
         if(this.y < this.target.y - 5) {
+            // Play walk up anim
+            // this.play(this.name + 'WalkUp')
             this.setVelocityY(-this.moveSpeed/2);
         } else if (this.y > this.target.y + 5) {
+            // Play walk down anim
+            // this.play(this.name + 'WalkDown')
             this.setVelocityY(this.moveSpeed/2);
         } else {
             this.setVelocityY(0);

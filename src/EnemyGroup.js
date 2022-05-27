@@ -28,13 +28,13 @@ class EnemyGroups {
         this.addRangedEnemyGroup();
     }
 
-    addBasicEnemy(x, y, target, range, speed){
-        let be = new BasicEnemy(this.scene, x, y, this.basicEnemyTexture, 0, target, range, speed);
+    addBasicEnemy(x, y, target, range, speed, name){
+        let be = new BasicEnemy(this.scene, x, y, this.basicEnemyTexture, 0, target, range, speed, name);
         this.BEGroup.add(be);
     }
 
-    addRangedEnemy(x, y, target, range, speed){
-        let re = new RangedEnemy(this.scene, x, y, this.rangedEnemyTexture, 0, target, range, speed);
+    addRangedEnemy(x, y, target, range, speed, name){
+        let re = new RangedEnemy(this.scene, x, y, this.rangedEnemyTexture, 0, target, range, speed, name);
         this.REGroup.add(re);
     }
 
