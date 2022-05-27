@@ -1,10 +1,12 @@
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, onIce) {
         super(scene, x, y, texture, frame);
-        scene.add.existing(this).setOrigin(0.5);
+        scene.add.existing(this).setOrigin(0.5, 0.5);
         scene.physics.add.existing(this);
-        this.body.setSize(this.width, this.height/2);
-        this.body.setOffset(0, this.height/3)
+        
+        // Hardcoded for future changes
+        this.body.setSize(64,64);
+        //this.body.setOffset(0, this.height/3)
 
         this.scene = scene;
         this.setMaxVelocity(game.settings.moveSpeed);
@@ -19,7 +21,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.lastAxisH = 0;
         this.lastAxisV = 0;
 
-        
         // Sound Effects
         this.attackSFX = scene.sound.add('attack');
         this.hurtSFX = scene.sound.add('hurt');
@@ -42,7 +43,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-
+        this.body.updateCenter()
         if(!this.movementLock) {
             if (this.onIce){
                 this.setAcceleration(this.getAxisH() * this.speed, this.getAxisV() * this.speed);
@@ -285,7 +286,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             // Use movementLock when there is an animation or more conditions to stop the dash
             if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
                 this.dash = true;
-                this.setMaxVelocity(game.settings.moveSpeed * 3)
+                this.setMaxVelocity(game.settings.moveSpeed * 1.5)
                 this.dashBar.width = 0;
                 this.movementLock = true;
                 this.setVelocity(this.getAxisH() * this.speed * 3, this.getAxisV() * this.speed * 3)
