@@ -5,8 +5,8 @@ class Level2 extends Phaser.Scene {
 
     preload() {
         // Add enemy images/atlases here
-        this.load.image('enemy1', './assets/tempEnemy1.png');
-        this.load.image('enemy2', './assets/tempEnemy2.png');
+        this.load.atlas('be2_atlas', './assets/yetiCyclops.png', './assets/yetiCyclops.json');
+        this.load.atlas('re2_atlas', './assets/iceCobra.png', './assets/iceCobra.json');
         this.load.image('bullet', './assets/Square.png');
         this.load.image('darkness', './assets/darkness.png')
 
@@ -32,8 +32,11 @@ class Level2 extends Phaser.Scene {
 
 
         // Add enemy groups
-        this.EGroups = new EnemyGroups(this, 'enemy1', 'enemy2', 'bullet');
+        let beName = 'yeti';
+        let reName = 'iCobra';
+        this.EGroups = new EnemyGroups(this, 'be2_atlas', 're2_atlas', 'bullet');
         this.EGroups.addEnemyGroups();
+        this.createEnemyAnims(beName, reName);
 
         // get basic enemy object array from tilemap Objects layer
         let BasicEnemyObjects = map.filterObjects("Objects", obj => obj.name === "basicEnemy");
@@ -58,10 +61,10 @@ class Level2 extends Phaser.Scene {
 
         // Add enemy
         BasicEnemyObjects.map((element) => {
-            this.EGroups.addBasicEnemy(element.x, element.y, this.p1, 400, 200);
+            this.EGroups.addBasicEnemy(element.x, element.y, this.p1, 400, 200, beName);
         })
         RangedEnemyObjects.map((element) => {
-            this.EGroups.addRangedEnemy(element.x, element.y, this.p1, 500, 200);
+            this.EGroups.addRangedEnemy(element.x, element.y, this.p1, 500, 200, reName);
         })
         this.physics.add.collider(this.EGroups.BEGroup, BottomWallsLayer)
         this.physics.add.collider(this.EGroups.BEGroup, TopWallsLayer)
@@ -121,6 +124,104 @@ class Level2 extends Phaser.Scene {
     checkOverlap(p1, tile){
         if(tile.index == -1) return false;
         return true;
+    }
+
+    createEnemyAnims(beName, reName) {
+        this.anims.create({
+            key: beName + 'WalkUp',
+            defaultTextureKey: 'be2_atlas',
+            frames: [{ frame: 'WalkUp_0001' }],
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: beName + 'WalkDown',
+
+            frames: this.anims.generateFrameNames('be2_atlas', {
+                prefix: 'WalkDown_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+        this.anims.create({
+            key: beName + 'WalkLeft',
+
+            frames: this.anims.generateFrameNames('be2_atlas', {
+                prefix: 'WalkLeft_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+        this.anims.create({
+            key: beName + 'WalkRight',
+
+            frames: this.anims.generateFrameNames('be2_atlas', {
+                prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: reName + 'WalkUp',
+            defaultTextureKey: 're2_atlas',
+            frames: [{ frame: 'WalkUp_0001' }],
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: reName + 'WalkDown',
+
+            frames: this.anims.generateFrameNames('re2_atlas', {
+                prefix: 'WalkDown_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: reName + 'WalkLeft',
+
+            frames: this.anims.generateFrameNames('re2_atlas', {
+                prefix: 'WalkLeft_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: reName + 'WalkRight',
+
+            frames: this.anims.generateFrameNames('re2_atlas', {
+                prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: 0
+        });
     }
 
 }

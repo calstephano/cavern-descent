@@ -51,7 +51,5 @@ class EnemyGroups {
             return false;
         }
     }
-    update() {
-        //console.log(this.BEGroup.getChildren().length)
-    }
+    
 }

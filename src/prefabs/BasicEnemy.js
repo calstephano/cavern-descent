@@ -22,11 +22,11 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
         if (this.playerDetected) {
             if(this.y < this.target.y - 15) {
                 // Play walk down anim
-                // this.play(this.name + 'WalkDown')
+                this.play(this.name + 'WalkDown', true)
                 this.setVelocityY(this.moveSpeed);
             } else if (this.y > this.target.y + 15) {
                 // Play walk up anim
-                // this.play(this.name + 'WalkUp')
+                this.play(this.name + 'WalkUp', true)
                 this.setVelocityY(-this.moveSpeed);
             } else {
                 this.setVelocityY(0);
@@ -35,11 +35,11 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
             if(this.x < this.target.x - 15) {
                 this.setVelocityX(this.moveSpeed);
                 // Play walk right anim
-                // this.play(this.name + 'WalkRight')
+                this.play(this.name + 'WalkRight', true)
             } else if (this.x > this.target.x + 15) {
                 this.setVelocityX(-this.moveSpeed);
                 // Play walk left anim
-                // this.play(this.name + 'WalkLeft')
+                this.play(this.name + 'WalkLeft', true)
             } else {
                 this.setVelocityX(0);
             }

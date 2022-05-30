@@ -59,10 +59,10 @@ class Level1 extends Phaser.Scene {
 
         // Add enemy
         BasicEnemyObjects.map((element) => {
-            this.EGroups.addBasicEnemy(element.x, element.y, this.p1, 400, 200);
+            this.EGroups.addBasicEnemy(element.x, element.y, this.p1, 400, 200, beName);
         })
         RangedEnemyObjects.map((element) => {
-            this.EGroups.addRangedEnemy(element.x, element.y, this.p1, 500, 200);
+            this.EGroups.addRangedEnemy(element.x, element.y, this.p1, 500, 200, reName);
         })
         this.physics.add.collider(this.EGroups.BEGroup, BottomWallsLayer)
         this.physics.add.collider(this.EGroups.BEGroup, TopWallsLayer)

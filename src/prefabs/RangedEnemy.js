@@ -5,7 +5,9 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         this.name = name;
         this.target = target;           // Generally, the player will be the target
-        this.detectRange = range;       // Range set to prevent enemy from detecting player on the other side of map
+        this.approachLimit = range;       // Range set to prevent enemy from detecting player on the other side of map
+        this.attackRange = range * 1.5; // Attack range set higher to allow enemy to attack from a range
+        this.escapeRange = range * 0.75;  // Range at which the enemy will try to escape
         this.name = name;
         this.moveSpeed = speed;
 
@@ -13,32 +15,28 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene;
 
         // Currently hardcoded, change in the future
-        this.attackRange = range * 1.5; // Attack range set higher to allow enemy to attack from a range
-        this.escapeRange = range * 0.5;  // Range at which the enemy will try to escape
+        
 
         this.attackDelay = 2000;
         this.attackCountdown = 2000;
     }
 
     update(time, delta) {
-        if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.detectRange && !this.playerDetected) {
+        if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.attackRange && !this.playerDetected) {
             this.playerDetected = true;
             console.log('!!!')
         }
         
         if (this.playerDetected) {
-            if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.attackRange) {
-                this.attackCountdown -= delta;
-                if(this.attackCountdown <= 0) {
-                    this.attackCountdown = this.attackDelay;
-                    let angle = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y);
-                    this.scene.EGroups.fireBullet(this.x, this.y, 350, angle);
-                }
+            this.attackCountdown -= delta;
+            if(this.attackCountdown <= 0) {
+                this.attackCountdown = this.attackDelay;
+                let angle = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y);
+                this.scene.EGroups.fireBullet(this.x, this.y, 350, angle);
             }
-            if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) >= this.detectRange) {
+            if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) >= this.approachLimit) {
                 this.approach();
             } else if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.escapeRange) {
-                this.attackCountdown = this.attackDelay;
                 this.flee();
             }
             else {
@@ -48,25 +46,25 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     approach() {
-        if(this.x < this.target.x - 5) {
+        if(this.x < this.target.x - 15) {
             this.setVelocityX(this.moveSpeed);
             // Play walk right anim
-            // this.play(this.name + 'WalkRight')
+            this.play(this.name + 'WalkRight', true)
         } else if (this.x > this.target.x + 5) {
             this.setVelocityX(-this.moveSpeed);
             // Play walk left anim
-            // this.play(this.name + 'WalkLeft')
+            this.play(this.name + 'WalkLeft', true)
         } else {
             this.setVelocityX(0);
         }
 
-        if(this.y < this.target.y) {
+        if(this.y < this.target.y - 15) {
             // Play walk down anim
-            // this.play(this.name + 'WalkDown')
+            this.play(this.name + 'WalkDown', true)
             this.setVelocityY(this.moveSpeed);
         } else if (this.y > this.target.y) {
             // Play walk up anim
-            // this.play(this.name + 'WalkUp')
+            this.play(this.name + 'WalkUp', true)
             this.setVelocityY(-this.moveSpeed);
         } else {
             this.setVelocityY(0);
@@ -75,24 +73,24 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
 
     flee() {
         if(this.x < this.target.x - 5) {
-            // Play walk left anim
-            // this.play(this.name + 'WalkLeft')
+            // Play walk right anim but walk left (backing away)
+            this.play(this.name + 'WalkRight', true)
             this.setVelocityX(-this.moveSpeed/2);
         } else if (this.x > this.target.x + 5) {
-            // Play walk right anim
-            // this.play(this.name + 'WalkRight')
+            // Play walk left anim but walk right (backing away)
+            this.play(this.name + 'WalkLeft', true)
             this.setVelocityX(this.moveSpeed/2);
         } else {
             this.setVelocityX(0);
         }
 
         if(this.y < this.target.y - 5) {
-            // Play walk up anim
-            // this.play(this.name + 'WalkUp')
+            // Play walk down anim but walk up (backing away)
+            this.play(this.name + 'WalkDown', true)
             this.setVelocityY(-this.moveSpeed/2);
         } else if (this.y > this.target.y + 5) {
-            // Play walk down anim
-            // this.play(this.name + 'WalkDown')
+            // Play walk up anim but walk down (backing away)
+            this.play(this.name + 'WalkUp', true)
             this.setVelocityY(this.moveSpeed/2);
         } else {
             this.setVelocityY(0);

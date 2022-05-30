@@ -120,7 +120,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.dashBar.y = this.y - game.settings.sBarOffset;
             this.healthBar.x = this.x - game.settings.stamina/2;
             this.healthBar.y = this.y - game.settings.hBarOffset;
-            if(this.dashBar.width < game.settings.stamina) {
+            if(this.dashBar.width < game.settings.stamina && !this.movementLock) {
                 this.dashBar.width += game.settings.staminaRegen;
             }
 
@@ -311,7 +311,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // Normal atttack
         this.keySPACE.on('down', (key, event) => {
             console.log('Space pressed!');
-            if(this.weaponUse && !this.dash) {
+            if(this.weaponUse && !this.dash && this.dashBar.width > game.settings.stamina/3) {
+                this.dashBar.width -= game.settings.stamina/3
                 this.movementLock = true;
                 this.weaponActive = true;
                 this.attackSFX.play();
