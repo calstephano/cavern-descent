@@ -8,6 +8,7 @@ class Level1 extends Phaser.Scene {
         this.load.atlas('be1_atlas', './assets/imp.png', './assets/imp.json');
         this.load.atlas('re1_atlas', './assets/fireCobra.png', './assets/fireCobra.json');
         this.load.image('bullet', './assets/fireball.png');
+        this.load.image('combat', './assets/combat.png')
         //this.load.image('darkness', './assets/darkness.png')
 
         // Tilemap
@@ -28,6 +29,8 @@ class Level1 extends Phaser.Scene {
         const TopWallsLayer = map.createLayer('TopWalls', tileset);
         let p1Spawn = map.findObject("Objects", obj => obj.name === "playerSpawn");
 
+        let combatTip = map.findObject("Objects", obj => obj.name === "combat");
+        this.add.image(combatTip.x, combatTip.y, 'combat').setAlpha(0.5)
 
         // Add enemy groups
         let beName = 'imp';

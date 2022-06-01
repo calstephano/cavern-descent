@@ -11,6 +11,7 @@ class Door1 extends Phaser.Scene {
             spacing: 2
         });
         this.load.image('test', './assets/doorTiles.png')
+        this.load.image('movement', './assets/move.png')
     }
 
     create() {
@@ -26,6 +27,8 @@ class Door1 extends Phaser.Scene {
             collides: true 
         });
 
+        let moveTip = map.findObject("Objects", obj => obj.name === "movement");
+        this.add.image(moveTip.x, moveTip.y, 'movement').setAlpha(0.5)
         // set up player
         this.p1 = new Player(this, p1Spawn.x, p1Spawn.y, "idleAtlas", 'IdleDown_0001', false);
         this.physics.add.collider(this.p1, wallsLayer);

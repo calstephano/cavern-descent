@@ -100,8 +100,20 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":769.217,
-                 "y":705.882
+                 "x":768,
+                 "y":640
+                }, 
+                {
+                 "height":0,
+                 "id":3,
+                 "name":"movement",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":768,
+                 "y":684.5
                 }],
          "offsetx":32,
          "offsety":0,
@@ -112,7 +124,7 @@
          "y":0
         }],
  "nextlayerid":22,
- "nextobjectid":3,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.4",
