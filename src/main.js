@@ -27,4 +27,4 @@ let config = {
 
 let game = new Phaser.Game(config);
 // Reserve key names
-let keyW, keyA, keyS, keyD, keySPACE, keyR;
+let keyUp, keyLeft, keyDown, keyRight, keyAttack, keyDash;

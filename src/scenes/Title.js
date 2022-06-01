@@ -21,7 +21,7 @@ class Title extends Phaser.Scene {
             health: 3
         };
 
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        let keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keySPACE.on('down', () => {
             this.scene.start("door1Scene")
         })

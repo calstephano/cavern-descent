@@ -8,6 +8,7 @@ class Load extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.atlas('dashAttackAtlas', 'DashAttack.png', 'DashAttack.json');
         this.load.atlas('idleAtlas', 'playerIdle.png', 'playerIdle.json');
+        this.load.atlas('ArmedIdleAtlas', 'armedIdle.png', 'armedIdle.json');
         this.load.atlas('walkAtlas', 'playerWalk.png', 'playerWalk.json');
         this.load.atlas('armedWalkAtlas', 'armedWalk.png', 'armedWalk.json');
         this.load.atlas('attackAtlas', 'WideAttack.png', 'WideAttack.json');
@@ -61,6 +62,60 @@ class Load extends Phaser.Scene {
             defaultTextureKey: 'idleAtlas',
             frames: this.anims.generateFrameNames('idleAtlas', {
                 prefix: 'IdleDown_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 10,
+            yoyo: true,
+            repeatDelay: 3000,
+            repeat: -1
+        });
+
+        // Armed Idle anims
+        this.anims.create({
+            key: 'AIdleLeft',
+            defaultTextureKey: 'ArmedIdleAtlas',
+            frames: this.anims.generateFrameNames('ArmedIdleAtlas', {
+                prefix: 'IdleLeftSword_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 10,
+            yoyo: true,
+            repeatDelay: 3000,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'AIdleRight',
+            defaultTextureKey: 'ArmedIdleAtlas',
+            frames: this.anims.generateFrameNames('ArmedIdleAtlas', {
+                prefix: 'IdleRightSword_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 10,
+            yoyo: true,
+            repeatDelay: 3000,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'AIdleUp',
+            defaultTextureKey: 'ArmedIdleAtlas',
+            frames: [{ frame: 'IdleUpSword_0001' }],
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'AIdleDown',
+            defaultTextureKey: 'ArmedIdleAtlas',
+            frames: this.anims.generateFrameNames('ArmedIdleAtlas', {
+                prefix: 'IdleDownSword_',
                 start: 1,
                 end: 3,
                 suffix: '',

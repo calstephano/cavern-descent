@@ -28,8 +28,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         
         // Bind keys
-        this.keySHIFT = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-        this.keySPACE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyX = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        this.keyZ = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
 
         // Debug Key
         let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
@@ -43,18 +43,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        this.body.updateCenter()
+        let axisH = this.getAxisH()
+        let axisV = this.getAxisV()
         if(!this.movementLock) {
             if (this.onIce){
-                this.setAcceleration(this.getAxisH() * this.speed, this.getAxisV() * this.speed);
+                this.setAcceleration(axisH * this.speed, axisV * this.speed);
             } else {
-                this.setVelocity(this.getAxisH() * this.speed, this.getAxisV() * this.speed)
+                this.setVelocity(axisH * this.speed, axisV * this.speed)
             }
             
-            this.getDirection();
-            this.getLastDirection();
+            this.getDirection(axisH, axisV);
+            this.getLastDirection(axisH, axisV);
             // Determine direction and play anims based on that
-            if( this.getAxisH() || this.getAxisV() ) {
+            if( axisH || axisV ) {
                 if(this.onIce) {
                     this.setDrag(0);
                 }
@@ -92,18 +93,34 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 if(this.onIce) {
                     this.setDrag(250);
                 }
-                if (this.direction == 'left') {
-                    // Play left idle anim
-                    this.play('idleLeft', true);
-                } else if (this.direction == 'right') {
-                    // Play right idle anim
-                    this.play('idleRight', true);
-                } else if (this.direction == 'up') {
-                    // Play up idle anim
-                    this.play('idleUp', true);
+                if(this.weaponUse){
+                    if (this.direction == 'left') {
+                        // Play left walk anim
+                        this.play('AIdleLeft', true);
+                    } else if (this.direction == 'right') {
+                        // Play right walk anim
+                        this.play('AIdleRight', true);
+                    } else if (this.direction == 'up') {
+                        // Play up walk anim
+                        this.play('AIdleUp', true);
+                    } else {
+                        // Play down walk anim
+                        this.play('AIdleDown', true);
+                    }
                 } else {
-                    // Play down idle anim
-                    this.play('idleDown', true);
+                    if (this.direction == 'left') {
+                        // Play left idle anim
+                        this.play('idleLeft', true);
+                    } else if (this.direction == 'right') {
+                        // Play right idle anim
+                        this.play('idleRight', true);
+                    } else if (this.direction == 'up') {
+                        // Play up idle anim
+                        this.play('idleUp', true);
+                    } else {
+                        // Play down idle anim
+                        this.play('idleDown', true);
+                    }
                 }
             }
             // console.log(this.x + ', ' + this.y + ' Box: ' + this.hitbox.x + ', ' + this.hitbox.y)
@@ -144,41 +161,39 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Taking a page out of Unity's getAxisRaw methods for movement
     getAxisH() {
-        if (keyA.isDown && keyD.isDown){
+        if (keyLeft.isDown && keyRight.isDown){
             return 0;
         }
-        else if (keyA.isDown) {
+        else if (keyLeft.isDown) {
             return -1;
-        } else if (keyD.isDown) {
+        } else if (keyRight.isDown) {
             return 1;
         }
         return 0;
     }
 
     getAxisV() {
-        if (keyW.isDown && keyS.isDown){
+        if (keyUp.isDown && keyDown.isDown){
             return 0;
         }
-        else if (keyW.isDown) {
+        else if (keyUp.isDown) {
             return -1;
-        } else if (keyS.isDown) {
+        } else if (keyDown.isDown) {
             return 1;
         }
         return 0;
     }
 
     // For use in Walking/Idle/Attacks anims
-    getDirection(){
-        if(this.getAxisV() == 1) this.direction = 'down'
-        if(this.getAxisV() == -1) this.direction = 'up'
-        if(this.getAxisH() == -1) this.direction = 'left'
-        if(this.getAxisH() == 1) this.direction = 'right'
+    getDirection(axisH, axisV){
+        if(axisV == 1) this.direction = 'down'
+        if(axisV == -1) this.direction = 'up'
+        if(axisH == -1) this.direction = 'left'
+        if(axisH == 1) this.direction = 'right'
     }
 
     // For use in Hitbox positions
-    getLastDirection(){
-        let axisH = this.getAxisH()
-        let axisV = this.getAxisV()
+    getLastDirection(axisH, axisV){
         if (!axisH && axisV) {
             this.lastAxisH = 0;
             if(axisV == 1) this.lastAxisV = 1;
@@ -255,8 +270,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.hitbox.destroy();
         this.dashBar.destroy();
         this.healthBar.destroy();
-        this.keySHIFT.enabled = false;
-        this.keySPACE.enabled = false;
+        this.keyX.enabled = false;
+        this.keyZ.enabled = false;
         this.destroy();
     }
 
@@ -281,8 +296,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.collider(this, this.scene.EGroups.bulletGroup, this.bulletCollide, null, this);
 
         // Dash attack
-        this.keySHIFT.on('down', (key, event) => {
-            console.log('Shift pressed!');
+        this.keyX.on('down', (key, event) => {
+            console.log('X pressed!');
             // Use movementLock when there is an animation or more conditions to stop the dash
             if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
                 this.dash = true;
@@ -309,8 +324,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         })
 
         // Normal atttack
-        this.keySPACE.on('down', (key, event) => {
-            console.log('Space pressed!');
+        this.keyZ.on('down', (key, event) => {
+            console.log('Z pressed!');
             if(this.weaponUse && !this.dash && this.dashBar.width > game.settings.stamina/3) {
                 this.dashBar.width -= game.settings.stamina/3
                 this.movementLock = true;

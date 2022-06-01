@@ -90,11 +90,11 @@ class Level2 extends Phaser.Scene {
         }, this.checkOverlap, this);
         
         // Set up keyboard controls for player
-        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyUp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyDown = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         // Test that the walls actualy have collision
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -115,7 +115,7 @@ class Level2 extends Phaser.Scene {
             this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to retry').setScrollFactor(0);
         }
         if(this.gameOver){
-            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
                 this.scene.start('door2Scene');
             }
         }
