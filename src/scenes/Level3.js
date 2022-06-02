@@ -21,7 +21,7 @@ class Level3 extends Phaser.Scene {
     create() {
         this.doorSFX = this.sound.add('doorEnter');
         const map = this.add.tilemap('level3_map');
-        const tileset = map.addTilesetImage('REPLCAE THIS AAAAAAAAAAAAAAAAA', 'level2tiles');
+        const tileset = map.addTilesetImage('dirtTiles', 'level2tiles');
         const groundLayer = map.createLayer('Ground', tileset);
         const entranceLayer = map.createLayer('Entrance', tileset);
         const TopWallsLayer = map.createLayer('TopWalls', tileset);

@@ -3,7 +3,7 @@ let config = {
     width: 1600,
     height: 900,
     autoCenter: true,
-    scene: [ Load, Title, Door1, Level1, Door2, Level2, Door3],
+    scene: [ Load, Title, Door1, Level1, Door2, Level2, Door3, Level3, Ending],
     physics: {
         default: "arcade",
         arcade: {
@@ -14,15 +14,6 @@ let config = {
         target: 60,
         forceSetTimeOut: true
     },
-    plugins: {
-        scene: [
-            {
-                key: 'PhaserRaycaster',
-                plugin: PhaserRaycaster,
-                mapping: 'raycasterPlugin'
-            }
-        ]
-    }
 }
 
 let game = new Phaser.Game(config);
