@@ -854,9 +854,6 @@
   <object id="10" name="basicEnemy" x="3345.34" y="2818.78">
    <point/>
   </object>
-  <object id="11" name="rangedEnemy" x="2688" y="2240">
-   <point/>
-  </object>
   <object id="12" name="basicEnemy" x="3517.99" y="1605.28">
    <point/>
   </object>
