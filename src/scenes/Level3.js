@@ -1,28 +1,27 @@
-class Level2 extends Phaser.Scene {
+class Level3 extends Phaser.Scene {
     constructor() {
-        super("level2Scene");
+        super("level3Scene");
     }
 
     preload() {
         // Add enemy images/atlases here
-        this.load.atlas('be2_atlas', './assets/yetiCyclops.png', './assets/yetiCyclops.json');
-        this.load.atlas('re2_atlas', './assets/iceCobra.png', './assets/iceCobra.json');
+        this.load.atlas('be3_atlas', './assets/imp.png', './assets/imp.json');
+        this.load.atlas('re3_atlas', './assets/fireCobra.png', './assets/fireCobra.json');
+        this.load.image('darkness', './assets/darkness.png')
 
         // Tilemap
-        this.load.tilemapTiledJSON('level2_map', './assets/level2.json');
-        this.load.spritesheet('level2tiles', './assets/iceTiles.png', {
+        this.load.tilemapTiledJSON('level3_map', './assets/level2.json');
+        this.load.spritesheet('level3tiles', './assets/dirtTiles.png', {
             frameWidth: 64,
             frameHeight: 64,
             spacing: 1
         });
-        // Sanity Check
-        // this.load.image('tile2test', './assets/iceTiles.png')
     }
 
     create() {
         this.doorSFX = this.sound.add('doorEnter');
-        const map = this.add.tilemap('level2_map');
-        const tileset = map.addTilesetImage('iceTiles', 'level2tiles');
+        const map = this.add.tilemap('level3_map');
+        const tileset = map.addTilesetImage('REPLCAE THIS AAAAAAAAAAAAAAAAA', 'level2tiles');
         const groundLayer = map.createLayer('Ground', tileset);
         const entranceLayer = map.createLayer('Entrance', tileset);
         const TopWallsLayer = map.createLayer('TopWalls', tileset);
@@ -32,7 +31,7 @@ class Level2 extends Phaser.Scene {
         // Add enemy groups
         let beName = 'yeti';
         let reName = 'iCobra';
-        this.EGroups = new EnemyGroups(this, 'be2_atlas', 're2_atlas', 'bullet');
+        this.EGroups = new EnemyGroups(this, 'be3_atlas', 're3_atlas', 'bullet');
         this.EGroups.addEnemyGroups();
         this.createEnemyAnims(beName, reName);
 
@@ -83,7 +82,7 @@ class Level2 extends Phaser.Scene {
             if (!this.inEntrance) {
                 this.inEntrance = true
                 this.doorSFX.play();
-                this.scene.start('door3Scene');
+                this.scene.start('endScene');
             }
         }, this.checkOverlap, this);
         
@@ -106,6 +105,8 @@ class Level2 extends Phaser.Scene {
     update() {
         if(!this.gameOver) {
             this.p1.update();
+            this.darkness.x = this.p1.x;
+            this.darkness.y = this.p1.y;
         }
         if(this.p1.health == 0 && !this.gameOver) {
             this.gameOver = true;
@@ -114,7 +115,7 @@ class Level2 extends Phaser.Scene {
         }
         if(this.gameOver){
             if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
-                this.scene.start('door2Scene');
+                this.scene.start('endScene');
             }
         }
     }
@@ -127,7 +128,7 @@ class Level2 extends Phaser.Scene {
     createEnemyAnims(beName, reName) {
         this.anims.create({
             key: beName + 'WalkUp',
-            defaultTextureKey: 'be2_atlas',
+            defaultTextureKey: 'be3_atlas',
             frames: [{ frame: 'WalkUp_0001' }],
             frameRate: 4,
             repeat: -1
@@ -135,7 +136,7 @@ class Level2 extends Phaser.Scene {
         this.anims.create({
             key: beName + 'WalkDown',
 
-            frames: this.anims.generateFrameNames('be2_atlas', {
+            frames: this.anims.generateFrameNames('be3_atlas', {
                 prefix: 'WalkDown_',
                 start: 1,
                 end: 3,
@@ -148,7 +149,7 @@ class Level2 extends Phaser.Scene {
         this.anims.create({
             key: beName + 'WalkLeft',
 
-            frames: this.anims.generateFrameNames('be2_atlas', {
+            frames: this.anims.generateFrameNames('be3_atlas', {
                 prefix: 'WalkLeft_',
                 start: 1,
                 end: 2,
@@ -161,7 +162,7 @@ class Level2 extends Phaser.Scene {
         this.anims.create({
             key: beName + 'WalkRight',
 
-            frames: this.anims.generateFrameNames('be2_atlas', {
+            frames: this.anims.generateFrameNames('be3_atlas', {
                 prefix: 'WalkRight_',
                 start: 1,
                 end: 2,
@@ -174,7 +175,7 @@ class Level2 extends Phaser.Scene {
 
         this.anims.create({
             key: reName + 'WalkUp',
-            defaultTextureKey: 're2_atlas',
+            defaultTextureKey: 're3_atlas',
             frames: [{ frame: 'WalkUp_0001' }],
             frameRate: 4,
             repeat: -1
@@ -182,7 +183,7 @@ class Level2 extends Phaser.Scene {
         this.anims.create({
             key: reName + 'WalkDown',
 
-            frames: this.anims.generateFrameNames('re2_atlas', {
+            frames: this.anims.generateFrameNames('re3_atlas', {
                 prefix: 'WalkDown_',
                 start: 1,
                 end: 2,
@@ -196,7 +197,7 @@ class Level2 extends Phaser.Scene {
         this.anims.create({
             key: reName + 'WalkLeft',
 
-            frames: this.anims.generateFrameNames('re2_atlas', {
+            frames: this.anims.generateFrameNames('re3_atlas', {
                 prefix: 'WalkLeft_',
                 start: 1,
                 end: 2,
@@ -210,7 +211,7 @@ class Level2 extends Phaser.Scene {
         this.anims.create({
             key: reName + 'WalkRight',
 
-            frames: this.anims.generateFrameNames('re2_atlas', {
+            frames: this.anims.generateFrameNames('re3_atlas', {
                 prefix: 'WalkRight_',
                 start: 1,
                 end: 2,

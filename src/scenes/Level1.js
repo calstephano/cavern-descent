@@ -5,11 +5,10 @@ class Level1 extends Phaser.Scene {
 
     preload() {
         // Add enemy images/atlases here
-        this.load.atlas('be1_atlas', './assets/imp.png', './assets/imp.json');
+        this.load.atlas('be1_atlas', './assets/slime.png', './assets/slime.json');
         this.load.atlas('re1_atlas', './assets/fireCobra.png', './assets/fireCobra.json');
         this.load.image('bullet', './assets/fireball.png');
-        this.load.image('combat', './assets/combat.png')
-        //this.load.image('darkness', './assets/darkness.png')
+        this.load.image('combat', './assets/combat.png') 
 
         // Tilemap
         this.load.tilemapTiledJSON('level1_map', './assets/level1.json');
@@ -149,7 +148,7 @@ class Level1 extends Phaser.Scene {
 
         this.demoText = this.add.text(400, 225, "Map is just an image. No wall collision yet\nWASD, Space, Shift").setScrollFactor(0);
 
-        // this.darkness = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(10);
+        
         // this.darkness2 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(8.5);
         // this.darkness3 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(7);
         // this.darkness4 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(5.5);
@@ -204,7 +203,7 @@ class Level1 extends Phaser.Scene {
             frames: this.anims.generateFrameNames('be1_atlas', {
                 prefix: 'WalkDown_',
                 start: 1,
-                end: 3,
+                end: 2,
                 suffix: '',
                 zeroPad: 4
             }),

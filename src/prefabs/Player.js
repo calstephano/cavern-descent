@@ -32,14 +32,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.keyZ = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
 
         // Debug Key
-        let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
+        // let keyK = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
 
-        keyK.on('down', (key, event) => {
-            if(this.weaponUse) this.disableWeapon();
-            else this.enableWeapon();
-        });
-        // Player anims should be created in Load.js
-
+        // keyK.on('down', (key, event) => {
+        //     if(this.weaponUse) this.disableWeapon();
+        //     else this.enableWeapon();
+        // });
     }
 
     update() {
