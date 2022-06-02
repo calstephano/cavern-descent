@@ -815,7 +815,7 @@
   </data>
  </layer>
  <objectgroup id="5" name="Objects">
-  <object id="1" name="playerSpawn" x="617.102" y="814.368">
+  <object id="1" name="playerSpawn" x="617.102" y="831.57">
    <point/>
   </object>
   <object id="2" name="basicEnemy" x="2109.18" y="645.266">
@@ -864,9 +864,6 @@
    <point/>
   </object>
   <object id="14" name="basicEnemy" x="2825.94" y="865.25">
-   <point/>
-  </object>
-  <object id="15" name="combat" x="617.102" y="885.352">
    <point/>
   </object>
  </objectgroup>
