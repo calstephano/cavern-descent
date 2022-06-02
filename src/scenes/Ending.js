@@ -8,7 +8,7 @@ class Ending extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(game.config.width/2,game.config.height/2, 'Two of our artists are dealing with COVID D:.\nIf you see this message. We\'re still working on the ending as a result\nPress SPACE to return to the title screen');
+        this.add.text(game.config.width/2,game.config.height/2, 'Two of our artists are dealing with COVID D:.\nIf you see this message. We\'re still working on the ending.\nPress SPACE to return to the title screen');
 
         game.settings = {
             moveSpeed: 400,

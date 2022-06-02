@@ -10,7 +10,7 @@ class Level3 extends Phaser.Scene {
         this.load.image('darkness', './assets/darkness.png')
 
         // Tilemap
-        this.load.tilemapTiledJSON('level3_map', './assets/level2.json');
+        this.load.tilemapTiledJSON('level3_map', './assets/level3.json');
         this.load.spritesheet('level3tiles', './assets/dirtTiles.png', {
             frameWidth: 64,
             frameHeight: 64,
@@ -21,7 +21,7 @@ class Level3 extends Phaser.Scene {
     create() {
         this.doorSFX = this.sound.add('doorEnter');
         const map = this.add.tilemap('level3_map');
-        const tileset = map.addTilesetImage('dirtTiles', 'level2tiles');
+        const tileset = map.addTilesetImage('dirtTiles', 'level3tiles');
         const groundLayer = map.createLayer('Ground', tileset);
         const entranceLayer = map.createLayer('Entrance', tileset);
         const TopWallsLayer = map.createLayer('TopWalls', tileset);
@@ -29,8 +29,8 @@ class Level3 extends Phaser.Scene {
 
 
         // Add enemy groups
-        let beName = 'yeti';
-        let reName = 'iCobra';
+        let beName = 'imp';
+        let reName = 'fCobra';
         this.EGroups = new EnemyGroups(this, 'be3_atlas', 're3_atlas', 'bullet');
         this.EGroups.addEnemyGroups();
         this.createEnemyAnims(beName, reName);
@@ -42,7 +42,7 @@ class Level3 extends Phaser.Scene {
 
         // set up player
         this.gameOver = false;
-        this.p1 = new Player(this, p1Spawn.x, p1Spawn.y, "idleAtlas", 'IdleDown_0001', true);
+        this.p1 = new Player(this, p1Spawn.x, p1Spawn.y, "idleAtlas", 'IdleDown_0001', false);
         this.p1.setupCombat(true);
 
         // Create lower walls + collisions for both top and bottom walls
@@ -93,6 +93,8 @@ class Level3 extends Phaser.Scene {
         keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
+        // Darkness mechanic
+        this.darkness = this.physics.add.image(p1Spawn.x, p1Spawn.y, 'darkness');
         // Test that the walls actualy have collision
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
         // wallsLayer.renderDebug(debugGraphics, {

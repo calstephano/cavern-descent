@@ -32,7 +32,7 @@ class Level1 extends Phaser.Scene {
         this.add.image(combatTip.x, combatTip.y, 'combat').setAlpha(0.5)
 
         // Add enemy groups
-        let beName = 'imp';
+        let beName = 'slime';
         let reName = 'fCobra';
         this.EGroups = new EnemyGroups(this, 'be1_atlas', 're1_atlas', 'bullet');
         this.EGroups.addEnemyGroups();

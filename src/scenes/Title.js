@@ -8,7 +8,7 @@ class Title extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(game.config.width/2,game.config.height/2, 'TITLE SCREEN (Name pending)\nPress SPACE to start');
+        this.add.text(game.config.width/2,game.config.height/2, 'Cavern Descent (Title Screen in progress)\nPress SPACE to start');
 
         game.settings = {
             moveSpeed: 400,
