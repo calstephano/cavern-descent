@@ -6,7 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         
         // Hardcoded for future changes
         this.body.setSize(64,64);
-        //this.body.setOffset(0, this.height/3)
+        this.body.setOffset(this.width/2 - this.width/8, 120)
 
         this.scene = scene;
         this.setMaxVelocity(game.settings.moveSpeed);

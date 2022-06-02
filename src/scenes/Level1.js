@@ -12,7 +12,7 @@ class Level1 extends Phaser.Scene {
 
         // Tilemap
         this.load.tilemapTiledJSON('level1_map', './assets/level1.json');
-        this.load.spritesheet('level1tiles', './assets/placeholder.png', {
+        this.load.spritesheet('level1tiles', './assets/dirtTiles.png', {
             frameWidth: 64,
             frameHeight: 64,
             spacing: 0
@@ -22,7 +22,7 @@ class Level1 extends Phaser.Scene {
     create() {
         this.doorSFX = this.sound.add('doorEnter');
         const map = this.add.tilemap('level1_map');
-        const tileset = map.addTilesetImage('placeholder', 'level1tiles');
+        const tileset = map.addTilesetImage('dirtTiles', 'level1tiles');
         const groundLayer = map.createLayer('Ground', tileset);
         const entranceLayer = map.createLayer('Entrance', tileset);
         const TopWallsLayer = map.createLayer('TopWalls', tileset);
