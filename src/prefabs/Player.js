@@ -248,13 +248,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     // For clarity and use outside of class
     enableWeapon() {
-        console.log('Weapons enabled!')
+        // console.log('Weapons enabled!')
         this.weaponUse = true;
     }
 
     // For clarity and use outside of class
     disableWeapon() {
-        console.log('Weapons disabled!')
+        // console.log('Weapons disabled!')
         this.weaponUse = false;
     }
 
@@ -295,8 +295,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         // Dash attack
         this.keyX.on('down', (key, event) => {
-            console.log('X pressed!');
-            // Use movementLock when there is an animation or more conditions to stop the dash
+            // console.log('X pressed!');
             if( (this.getAxisH() || this.getAxisV()) && this.dashBar.width >= 40 ){
                 this.dash = true;
                 this.setMaxVelocity(game.settings.moveSpeed * 2.25)
@@ -304,7 +303,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.movementLock = true;
                 this.setVelocity(this.getAxisH() * this.speed * 3, this.getAxisV() * this.speed * 3)
                 if(this.weaponUse) { // If false, the dash is just mobility
-                    console.log(this.direction);
+                    // console.log(this.direction);
                     this.weaponActive = true;
                     if (this.direction == 'left') {
                         this.play('dashAttackLeft')
@@ -323,7 +322,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         // Normal atttack
         this.keyZ.on('down', (key, event) => {
-            console.log('Z pressed!');
+            // console.log('Z pressed!');
             if(this.weaponUse && !this.dash && this.dashBar.width > game.settings.stamina/3) {
                 this.dashBar.width -= game.settings.stamina/3
                 this.movementLock = true;

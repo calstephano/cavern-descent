@@ -24,7 +24,7 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
     update(time, delta) {
         if (Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y) <= this.attackRange && !this.playerDetected) {
             this.playerDetected = true;
-            console.log('!!!')
+            // console.log('!!!')
         }
         
         if (this.playerDetected) {

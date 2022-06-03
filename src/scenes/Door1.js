@@ -39,7 +39,7 @@ class Door1 extends Phaser.Scene {
             if (!this.inEntrance) {
                 this.inEntrance = true
                 this.doorSFX.play();
-                this.scene.start('level1Scene');
+                this.scene.start('endScene');
             }
         }, this.checkOverlap, this);
         
