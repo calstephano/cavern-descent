@@ -117,7 +117,7 @@ class Level3 extends Phaser.Scene {
         }
         if(this.gameOver){
             if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
-                this.scene.start('endScene');
+                this.scene.start('door3Scene');
             }
         }
     }
