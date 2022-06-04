@@ -21,7 +21,7 @@ class Load extends Phaser.Scene {
         // Preload cutscenes
         this.load.image('intro1', 'intro1.png')
         this.load.image('intro2', 'intro2.png')
-        this.load.image('intro3', './assets/intro3.png')
+        this.load.image('intro3', '.intro3.png')
         this.load.image('transition', 'introTransition.png')
         this.load.image('end1', 'end1.png')
         this.load.image('end2', 'end2.png')
