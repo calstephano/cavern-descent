@@ -7,7 +7,7 @@ class Intro extends Phaser.Scene {
         this.load.image('intro1', './assets/intro1.png')
         this.load.image('intro2', './assets/intro2.png')
         this.load.image('intro3', './assets/intro3.png')
-        this.load.image('transition', './assets/introtransition.png')
+        this.load.image('transition', './assets/introTransition.png')
     }
 
     create() {
