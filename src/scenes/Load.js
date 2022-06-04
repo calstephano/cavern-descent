@@ -19,14 +19,14 @@ class Load extends Phaser.Scene {
         this.load.audio('gameOver', 'gameOver.wav');
 
         // Preload cutscenes
-        this.load.image('intro1', './assets/intro1.png')
-        this.load.image('intro2', './assets/intro2.png')
+        this.load.image('intro1', 'intro1.png')
+        this.load.image('intro2', 'intro2.png')
         this.load.image('intro3', './assets/intro3.png')
-        this.load.image('transition', './assets/introTransition.png')
-        this.load.image('end1', './assets/end1.png')
-        this.load.image('end2', './assets/end2.png')
-        this.load.image('end3', './assets/end3.png')
-        this.load.image('end4', './assets/end4.png')     
+        this.load.image('transition', 'introTransition.png')
+        this.load.image('end1', 'end1.png')
+        this.load.image('end2', 'end2.png')
+        this.load.image('end3', 'end3.png')
+        this.load.image('end4', 'end4.png')     
     }
 
     create() {
