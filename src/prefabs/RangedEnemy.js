@@ -17,8 +17,8 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
         // Currently hardcoded, change in the future
         
 
-        this.attackDelay = 2000;
-        this.attackCountdown = 2000;
+        this.attackDelay = 1500;
+        this.attackCountdown = 1500;
     }
 
     update(time, delta) {

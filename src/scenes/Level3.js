@@ -20,6 +20,7 @@ class Level3 extends Phaser.Scene {
 
     create() {
         this.doorSFX = this.sound.add('doorEnter');
+        this.gameOverSFX = this.sound.add('gameOver');
         const map = this.add.tilemap('level3_map');
         const tileset = map.addTilesetImage('dirtTiles', 'level3tiles');
         const groundLayer = map.createLayer('Ground', tileset);
@@ -94,7 +95,7 @@ class Level3 extends Phaser.Scene {
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         // Darkness mechanic
-        this.darkness = this.physics.add.image(p1Spawn.x, p1Spawn.y, 'darkness');
+        this.darkness = this.physics.add.image(p1Spawn.x, p1Spawn.y, 'darkness').setDepth(1);
         // Test that the walls actualy have collision
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
         // wallsLayer.renderDebug(debugGraphics, {
@@ -112,6 +113,7 @@ class Level3 extends Phaser.Scene {
         }
         if(this.p1.health == 0 && !this.gameOver) {
             this.gameOver = true;
+            this.gameOverSFX.play();
             this.p1.kill();
             this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to retry').setScrollFactor(0);
         }

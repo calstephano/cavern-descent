@@ -21,6 +21,7 @@ class Level1 extends Phaser.Scene {
 
     create() {
         this.doorSFX = this.sound.add('doorEnter');
+        this.gameOverSFX = this.sound.add('gameOver');
         const map = this.add.tilemap('level1_map');
         const tileset = map.addTilesetImage('dirtTiles', 'level1tiles');
         const groundLayer = map.createLayer('Ground', tileset);
@@ -95,76 +96,6 @@ class Level1 extends Phaser.Scene {
         keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-
-        // Test that the walls actualy have collision
-        // const debugGraphics = this.add.graphics().setAlpha(0.75);
-        // wallsLayer.renderDebug(debugGraphics, {
-        //     tileColor: null,    // color of non-colliding tiles
-        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),    // color of colliding tiles
-        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255)                // color of colliding face edges
-        // });
-        
-        /*
-        // Delete everything after this line, these are for testing
-        // Keyboard controls
-        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-
-        this.map = this.add.image(0, 0, 'protomap').setOrigin(0);
-        this.map.setScale(3);
-        this.map.setAlpha(0.5);
-
-        // Add enemy groups
-        this.EGroups = new EnemyGroups(this,'enemy1', 'enemy2', 'bullet');
-        this.EGroups.addEnemyGroups();
-
-        // Add player
-        this.playertest = new Player(this, 30, 625, "idleAtlas", 'IdleDown_0001', false);
-        this.playertest.setupCombat(true);
-        
-        this.physics.add.collider(this.playertest, this.walls)
-        this.gameOver = false
-
-        // Add enemy
-        // Enemies are currently loaded in through coordinates, will use tilemap to load these in later
-        this.EGroups.addBasicEnemy(500, 500, this.playertest, 200, 100);
-        // this.EGroups.addBasicEnemy(520, 700, this.playertest, 200, 100);
-        // this.EGroups.addBasicEnemy(1200, 700, this.playertest, 200, 100);
-        // this.EGroups.addBasicEnemy(1000, 800, this.playertest, 200, 100);
-        // this.EGroups.addBasicEnemy(1000, 1100, this.playertest, 200, 100);
-        // this.EGroups.addRangedEnemy(1000, 300, 'enemy2', 0, this.playertest, 300, 150)
-        // this.EGroups.addRangedEnemy(1000, 1200, 'enemy2', 0, this.playertest, 300, 150)
-
-        // Add world bounds to physics
-        this.physics.world.setBounds(0,0, this.map.width * this.map.scale, this.map.height* this.map.scale);
-        this.playertest.body.setCollideWorldBounds(true);
-
-        // Camera Test
-        this.cameras.main.setBounds(0, 0, this.map.width * this.map.scale, this.map.height * this.map.scale);
-        this.cameras.main.startFollow(this.playertest, true, 0.1, 0.1);
-
-        this.demoText = this.add.text(400, 225, "Map is just an image. No wall collision yet\nWASD, Space, Shift").setScrollFactor(0);
-
-        
-        // this.darkness2 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(8.5);
-        // this.darkness3 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(7);
-        // this.darkness4 = this.physics.add.image(this.playertest.x, this.playertest.y, 'darkness').setScale(5.5);
-        // this.darkness2.setAlpha(0.5);
-        // this.darkness3.setAlpha(0.5);
-        // this.darkness4.setAlpha(0.5);
-
-        // this.darkness.x = this.playertest.x;
-            // this.darkness.y = this.playertest.y;
-            // this.darkness2.x = this.playertest.x;
-            // this.darkness2.y = this.playertest.y;
-            // this.darkness3.x = this.playertest.x;
-            // this.darkness3.y = this.playertest.y;
-            // this.darkness4.x = this.playertest.x;
-            // this.darkness4.y = this.playertest.y;
-        */
     }
 
     update() {
@@ -173,6 +104,7 @@ class Level1 extends Phaser.Scene {
         }
         if(this.p1.health == 0 && !this.gameOver) {
             this.gameOver = true;
+            this.gameOverSFX.play()
             this.p1.kill();
             this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to retry').setScrollFactor(0);
         }

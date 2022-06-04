@@ -21,6 +21,7 @@ class Level2 extends Phaser.Scene {
 
     create() {
         this.doorSFX = this.sound.add('doorEnter');
+        this.gameOverSFX = this.sound.add('gameOver');
         const map = this.add.tilemap('level2_map');
         const tileset = map.addTilesetImage('iceTiles', 'level2tiles');
         const groundLayer = map.createLayer('Ground', tileset);
@@ -109,6 +110,7 @@ class Level2 extends Phaser.Scene {
         }
         if(this.p1.health == 0 && !this.gameOver) {
             this.gameOver = true;
+            this.gameOverSFX.play()
             this.p1.kill();
             this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to retry').setScrollFactor(0);
         }
