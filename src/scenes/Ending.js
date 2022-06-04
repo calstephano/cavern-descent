@@ -3,13 +3,6 @@ class Ending extends Phaser.Scene {
         super("endScene");
     }
 
-    preload() {
-        this.load.image('end1', './assets/end1.png')
-        this.load.image('end2', './assets/end2.png')
-        this.load.image('end3', './assets/end3.png')
-        this.load.image('end4', './assets/end4.png')        
-    }
-
     create() {
         this.skipText = this.add.text(10,game.config.height* 0.975, 'Press X to skip').setOrigin(0, 0.5);
         this.skipText.setDepth(2)
