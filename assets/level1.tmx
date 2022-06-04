@@ -1120,7 +1120,7 @@
 </chunk>
   </data>
  </layer>
- <objectgroup id="5" name="Objects" visible="0">
+ <objectgroup id="5" name="Objects">
   <object id="1" name="playerSpawn" x="320" y="320">
    <point/>
   </object>
