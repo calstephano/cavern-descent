@@ -7,6 +7,7 @@ class Level2 extends Phaser.Scene {
         // Add enemy images/atlases here
         this.load.atlas('be2_atlas', './assets/yetiCyclops.png', './assets/yetiCyclops.json');
         this.load.atlas('re2_atlas', './assets/iceCobra.png', './assets/iceCobra.json');
+        this.load.image('snowball', './assets/snowball.png');
 
         // Tilemap
         this.load.tilemapTiledJSON('level2_map', './assets/level2.json');
@@ -33,7 +34,7 @@ class Level2 extends Phaser.Scene {
         // Add enemy groups
         let beName = 'yeti';
         let reName = 'iCobra';
-        this.EGroups = new EnemyGroups(this, 'be2_atlas', 're2_atlas', 'bullet');
+        this.EGroups = new EnemyGroups(this, 'be2_atlas', 're2_atlas', 'snowball');
         this.EGroups.addEnemyGroups();
         this.createEnemyAnims(beName, reName);
 

@@ -26,7 +26,7 @@ class Load extends Phaser.Scene {
         this.load.image('end1', 'end1.png')
         this.load.image('end2', 'end2.png')
         this.load.image('end3', 'end3.png')
-        this.load.image('end4', 'end4.png')     
+        this.load.image('end4', 'end4.png')
     }
 
     create() {
