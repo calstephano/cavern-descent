@@ -4,9 +4,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this).setOrigin(0.5, 0.5);
         scene.physics.add.existing(this);
         
-        // Hardcoded for future changes
+        // Adjust player hurtbox and layer
         this.body.setSize(64,64);
         this.body.setOffset(this.width/2 - this.width/8, 120)
+        this.setDepth(1);
 
         this.scene = scene;
         this.setMaxVelocity(game.settings.moveSpeed);
