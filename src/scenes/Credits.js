@@ -4,14 +4,14 @@ class Credits extends Phaser.Scene {
     }
 
     preload() {
-        // Add Credits image
+        this.load.image('credits', './assets/Credit_Scene.png')
     }
 
     create() {
-
-        let keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keySPACE.on('down', () => {
-            this.scene.start("TitleScene")
+        this.add.image(0, 0, 'credits').setOrigin(0)
+        let keyBack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyBack.on('down', () => {
+            this.scene.start("titleScene")
         })
     }
 

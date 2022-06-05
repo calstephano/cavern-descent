@@ -4,7 +4,19 @@ class Intro extends Phaser.Scene {
     }
 
     create() {
-        this.skipText = this.add.text(10,game.config.height* 0.975, 'Press X to skip').setOrigin(0, 0.5);
+        let textConfig = {
+            fontFamily: 'FreePixel',
+            fontSize: '32px',
+            backgroundColor: '#050505',
+            color: '#FFFFFF',
+            align: 'left',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }
+        this.skipText = this.add.text(game.config.width/2, game.config.height* 0.95, 'Press X to skip', textConfig).setOrigin(0.5);;
         this.skipText.setDepth(2)
         this.cutscene = [];
         for (let i = 0; i < 3; i++) {
@@ -51,9 +63,6 @@ class Intro extends Phaser.Scene {
             // console.log(this.frame + '/' + (this.cutscene.length))
             if(this.frame >= this.cutscene.length) {
                 this.skipText.text = "Press X to continue";
-                this.skipText.setOrigin(0.5, 0.5);
-                this.skipText.x = game.config.width/2
-                this.skipText.y = game.config.height* 0.95
             } else {
                 this.cutscene[this.frame].setDepth(1);      // Set new frame on top if there is one
             }

@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="font" href="./assets/FreePixel.ttf" type="font/ttf" crossorigin />
     <title>Final Game</title>
     <style>
         body{
             background-color: rgb(39, 33, 78);
+        }
+        @font-face {
+            font-family: FreePixel;
+            src: url('./assets/FreePixel.ttf');
         }
     </style>
 </head>
@@ -20,6 +25,7 @@
     <script src = "./src/prefabs/Player.js"></script>
     <script src = "./src/scenes/Load.js"></script>
     <script src = "./src/scenes/Title.js"></script>
+    <script src = "./src/scenes/Credits.js"></script>
     <script src = "./src/scenes/Intro.js"></script>
     <script src = "./src/scenes/Door1.js"></script>
     <script src = "./src/scenes/Door2.js"></script>

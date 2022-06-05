@@ -19,6 +19,12 @@ class Level3 extends Phaser.Scene {
     }
 
     create() {
+        // Music
+        this.music = this.sound.add('level3Music');
+        this.music.loop = true;
+        this.music.play();
+
+        // Tileset
         this.doorSFX = this.sound.add('doorEnter');
         this.gameOverSFX = this.sound.add('gameOver');
         const map = this.add.tilemap('level3_map');
@@ -83,6 +89,7 @@ class Level3 extends Phaser.Scene {
             if (!this.inEntrance) {
                 this.inEntrance = true
                 this.doorSFX.play();
+                this.music.stop();
                 this.scene.start('endScene');
             }
         }, this.checkOverlap, this);
@@ -115,11 +122,23 @@ class Level3 extends Phaser.Scene {
             this.gameOver = true;
             this.gameOverSFX.play();
             this.p1.kill();
-            this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to retry').setScrollFactor(0);
+            let textConfig = {
+                fontFamily: 'FreePixel',
+                fontSize: '32px',
+                color: '#FFFFFF',
+                align: 'left',
+                padding: {
+                    top: 5,
+                    bottom: 5,
+                },
+                fixedWidth: 0
+            }
+            this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'YOU DIED\nPress R to retry', textConfig).setScrollFactor(0);
         }
         if(this.gameOver){
             if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
                 this.scene.start('door3Scene');
+                this.music.stop();
             }
         }
     }

@@ -27,6 +27,11 @@ class Load extends Phaser.Scene {
         this.load.image('end2', 'end2.png')
         this.load.image('end3', 'end3.png')
         this.load.image('end4', 'end4.png')
+
+        // Preload music
+        this.load.audio('level1Music', 'level_1.wav');
+        this.load.audio('level2Music', 'level_2.wav');
+        this.load.audio('level3Music', 'level_3.wav');
     }
 
     create() {

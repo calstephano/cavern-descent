@@ -4,11 +4,11 @@ class Title extends Phaser.Scene {
     }
 
     preload() {
-        
+        this.load.image('title', './assets/Title_Screen.png')
     }
 
     create() {
-        this.add.text(game.config.width/2,game.config.height/2, 'Cavern Descent (Title Screen in progress)\nPress SPACE to start');
+        this.add.image(0, 0, 'title').setOrigin(0);
 
         game.settings = {
             moveSpeed: 400,
@@ -21,9 +21,13 @@ class Title extends Phaser.Scene {
             health: 3
         };
 
-        let keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keySPACE.on('down', () => {
+        let keyStart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyStart.on('down', () => {
             this.scene.start("introScene")
+        })
+        let keyCredits = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyCredits.on('down', () => {
+            this.scene.start("creditsScene")
         })
     }
 
