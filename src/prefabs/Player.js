@@ -227,8 +227,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         else {
             if(player.health > 0) player.health -= 1;
             this.updateHealth();
-            enemy.kill();
             let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, player.x, player.y);
+            enemy.destroy();
             // Use angle to determine knockback
             let vX = 3000 * Math.cos(angle);
             let vY = 3000 * Math.sin(angle);
@@ -338,8 +338,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 } else {
                     this.play('attackDown')
                 }
-                this.scene.EGroups.BEGroup.getChildren().forEach(enemy => {})
-                //this.checkHitbox(within);
             }
         });
     }

@@ -6,7 +6,9 @@ class Level3 extends Phaser.Scene {
     preload() {
         // Add enemy images/atlases here
         this.load.atlas('be3_atlas', './assets/imp.png', './assets/imp.json');
+        this.load.atlas('be3_dieAtlas', './assets/impDie.png', './assets/impDie.json');
         this.load.atlas('re3_atlas', './assets/fireCobra.png', './assets/fireCobra.json');
+        this.load.atlas('re3_dieAtlas', './assets/fireCobraDie.png', './assets/fireCobraDie.json');
         this.load.image('darkness', './assets/darkness.png')
 
         // Tilemap
@@ -167,7 +169,7 @@ class Level3 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: beName + 'WalkLeft',
@@ -180,13 +182,26 @@ class Level3 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: beName + 'WalkRight',
 
             frames: this.anims.generateFrameNames('be3_atlas', {
                 prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: beName + 'Die',
+
+            frames: this.anims.generateFrameNames('be3_dieAtlas', {
+                prefix: 'die_',
                 start: 1,
                 end: 2,
                 suffix: '',
@@ -214,7 +229,7 @@ class Level3 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
 
         this.anims.create({
@@ -228,7 +243,7 @@ class Level3 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
 
         this.anims.create({
@@ -236,6 +251,19 @@ class Level3 extends Phaser.Scene {
 
             frames: this.anims.generateFrameNames('re3_atlas', {
                 prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: reName + 'Die',
+
+            frames: this.anims.generateFrameNames('re3_dieAtlas', {
+                prefix: 'die_',
                 start: 1,
                 end: 2,
                 suffix: '',

@@ -6,7 +6,9 @@ class Level1 extends Phaser.Scene {
     preload() {
         // Add enemy images/atlases here
         this.load.atlas('be1_atlas', './assets/slime.png', './assets/slime.json');
+        this.load.atlas('be1_dieAtlas', './assets/slimeDie.png', './assets/slimeDie.json');
         this.load.atlas('re1_atlas', './assets/fireCobra.png', './assets/fireCobra.json');
+        this.load.atlas('re1_dieAtlas', './assets/fireCobraDie.png', './assets/fireCobraDie.json');
         this.load.image('bullet', './assets/fireball.png');
         this.load.image('combat', './assets/combat.png') 
 
@@ -159,7 +161,7 @@ class Level1 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: beName + 'WalkLeft',
@@ -172,13 +174,26 @@ class Level1 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
         this.anims.create({
             key: beName + 'WalkRight',
 
             frames: this.anims.generateFrameNames('be1_atlas', {
                 prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: beName + 'Die',
+
+            frames: this.anims.generateFrameNames('be1_dieAtlas', {
+                prefix: 'die_',
                 start: 1,
                 end: 2,
                 suffix: '',
@@ -206,9 +221,8 @@ class Level1 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
-
         this.anims.create({
             key: reName + 'WalkLeft',
 
@@ -220,14 +234,26 @@ class Level1 extends Phaser.Scene {
                 zeroPad: 4
             }),
             frameRate: 4,
-            repeat: 0
+            repeat: -1
         });
-
         this.anims.create({
             key: reName + 'WalkRight',
 
             frames: this.anims.generateFrameNames('re1_atlas', {
                 prefix: 'WalkRight_',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: reName + 'Die',
+
+            frames: this.anims.generateFrameNames('re1_dieAtlas', {
+                prefix: 'die_',
                 start: 1,
                 end: 2,
                 suffix: '',

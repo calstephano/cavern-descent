@@ -9,8 +9,7 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
         this.moveSpeed = speed;
         this.name = name;
         this.playerDetected = false;    // Enemies start with no vision of player
-
-        // Create anims
+        this.dead = false;
     }
 
     update() {
@@ -19,7 +18,7 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
         }
 
         // Move the enemy towards the player if detected
-        if (this.playerDetected) {
+        if (this.playerDetected && !this.dead) {
             if(this.y < this.target.y - 15) {
                 // Play walk down anim
                 this.play(this.name + 'WalkDown', true)
@@ -43,11 +42,17 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.setVelocityX(0);
             }
+
         }
+        this.on('animationcomplete', (anim, frame) => {
+            if(anim.key == (this.name + 'Die')) this.destroy();
+        });
     }
 
     kill() {
-        // When die anim finishes,
-        this.destroy();
+        this.dead = true;
+        this.setVelocity(0);
+        this.body.enable = false;
+        this.play(this.name + 'Die');
     }
 }

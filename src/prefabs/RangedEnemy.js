@@ -13,10 +13,7 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
 
         this.playerDetected = false;    // Enemies start with no vision of player
         this.scene = scene;
-
-        // Currently hardcoded, change in the future
-        
-
+        this.dead = false;
         this.attackDelay = 1500;
         this.attackCountdown = 1500;
     }
@@ -27,7 +24,7 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
             // console.log('!!!')
         }
         
-        if (this.playerDetected) {
+        if (this.playerDetected && !this.dead) {
             this.attackCountdown -= delta;
             if(this.attackCountdown <= 0) {
                 this.attackCountdown = this.attackDelay;
@@ -43,6 +40,9 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
                 this.setVelocity(0);
             }
         }
+        this.on('animationcomplete', (anim, frame) => {
+            if(anim.key == (this.name + 'Die')) this.destroy();
+        });
     }
 
     approach() {
@@ -98,7 +98,9 @@ class RangedEnemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     kill() {
-        // When die anim finishes,
-        this.destroy();
+        this.dead = true;
+        this.setVelocity(0);
+        this.body.enable = false;
+        this.play(this.name + 'Die');
     }
 }
