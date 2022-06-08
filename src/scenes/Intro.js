@@ -16,7 +16,7 @@ class Intro extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        this.skipText = this.add.text(game.config.width/2, game.config.height* 0.95, 'Press X to skip', textConfig).setOrigin(0.5);;
+        this.skipText = this.add.text(game.config.width/2, game.config.height* 0.94, 'Press X to skip', textConfig).setOrigin(0.5);;
         this.skipText.setDepth(2)
         this.cutscene = [];
         for (let i = 0; i < 3; i++) {

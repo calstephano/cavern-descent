@@ -13,6 +13,11 @@ class Door3 extends Phaser.Scene {
     }
 
     create() {
+        // Music
+        this.music = this.sound.add('ambience');
+        this.music.loop = true;
+        this.music.play();
+
         this.doorSFX = this.sound.add('doorEnter');
         const map = this.add.tilemap('door3_map');
         const tileset = map.addTilesetImage('doorTiles', 'tiles');
@@ -35,6 +40,7 @@ class Door3 extends Phaser.Scene {
             if (!this.inEntrance) {
                 this.inEntrance = true
                 this.doorSFX.play();
+                this.music.stop();
                 this.scene.start('level3Scene');
             }
         }, this.checkOverlap, this);
