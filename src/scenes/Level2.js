@@ -265,7 +265,7 @@ class Level2 extends Phaser.Scene {
                 suffix: '',
                 zeroPad: 4
             }),
-            frameRate: 4,
+            frameRate: 8,
             repeat: 0
         });
     }
