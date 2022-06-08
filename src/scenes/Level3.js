@@ -207,7 +207,7 @@ class Level3 extends Phaser.Scene {
                 suffix: '',
                 zeroPad: 4
             }),
-            frameRate: 4,
+            frameRate: 8,
             repeat: 0
         });
 
@@ -269,7 +269,7 @@ class Level3 extends Phaser.Scene {
                 suffix: '',
                 zeroPad: 4
             }),
-            frameRate: 4,
+            frameRate: 8,
             repeat: 0
         });
     }
