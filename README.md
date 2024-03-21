@@ -1,6 +1,6 @@
 # Cavern Descent
 
-Final project for ARTG 120 & CMPM 120 at UCSC.
+Made as the final project for ARTG 120 and CMPM 120 at UCSC.
 
 Play the game: https://calstephano.github.io/cavern-descent/
 
